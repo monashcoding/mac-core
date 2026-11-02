@@ -1,0 +1,708 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>eox-vote style decisions - round 2</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet"><style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:#0d0d0d;color:#e9e9e4;font:15px/1.55 Poppins,system-ui,sans-serif}
+header{padding:36px 40px 8px;max-width:1500px;margin:auto}
+header h1{font:800 34px/1.1 Poppins,sans-serif;margin:0 0 6px;letter-spacing:-.02em}
+header h1 em{font-style:normal;background:#ffe330;color:#252525;padding:0 6px;border-radius:4px}
+header p{color:#a9a9a1;max-width:900px;margin:6px 0}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+nav.toc a{color:#e9e9e4;text-decoration:none;border:1px solid #333;padding:4px 10px;border-radius:999px;font-size:13px}
+section{max-width:1500px;margin:auto;padding:28px 40px 36px;border-top:1px solid #222}
+h2{font:700 24px/1.2 Poppins,sans-serif;margin:0;display:flex;align-items:center;gap:12px}
+h2 span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ffe330;color:#252525;font-size:17px}
+p.q{font-size:17px;margin:8px 0 2px;color:#fff}
+p.ev{color:#9d9d95;font-size:13px;margin:4px 0 16px;max-width:1200px}
+code{font:12px ui-monospace,Consolas,monospace;background:#1d1d1d;border:1px solid #2c2c2c;padding:0 4px;border-radius:4px;color:#d9d9cf}
+.grid{display:grid;gap:16px}
+.c4{grid-template-columns:repeat(4,minmax(0,1fr))}.c3{grid-template-columns:repeat(3,minmax(0,1fr))}.c2{grid-template-columns:repeat(2,minmax(0,1fr))}
+@media (max-width:1300px){.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:900px){.c3,.c2{grid-template-columns:1fr}}
+.tile{background:#151515;border:1px solid #262626;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.th{display:flex;flex-direction:column}
+.th b{font:700 15px Poppins,sans-serif;color:#fff}.th span{font-size:12px;color:#8f8f88;text-transform:uppercase;letter-spacing:.1em}
+.note{font-size:12.5px;color:#a3a39b;line-height:1.5}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* specimen */
+.spec{background:var(--page);color:var(--text);font-family:var(--fu);padding:14px;border-radius:10px;position:relative;overflow:hidden}
+.spec .bar{display:flex;align-items:center;gap:12px;font-size:13px;margin-bottom:14px}
+.spec .logo{width:22px;height:22px;border-radius:50%;background:var(--y);flex:none}
+.spec .bar b{font-weight:600;font-family:var(--fd);white-space:nowrap}
+.spec .nav{color:var(--muted)}.spec .nav.on{color:var(--text);font-weight:500}
+.spec .avatar{margin-left:auto;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#5757d3,#ffe330)}
+.spec .card{background:var(--card);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);box-shadow:var(--shadow);padding:16px}
+.spec .card+.card{margin-top:10px}
+.spec .eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.spec h3{font-family:var(--fd);font-size:19px;font-weight:700;margin:6px 0 4px;letter-spacing:-.01em;color:var(--text)}
+.spec p{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+.spec .opt{display:flex;align-items:center;gap:10px;height:var(--ctl-h);padding:0 12px;border:var(--hair) solid var(--border);border-radius:var(--r-ctl);margin-bottom:8px;font-size:14px;background:var(--field)}
+.spec .opt.sel{border-color:var(--emph);box-shadow:inset 0 0 0 1px var(--emph)}
+.spec .radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.spec .opt.sel .radio{border-color:var(--emph);background:radial-gradient(circle,var(--emph) 0 3.5px,transparent 4.5px)}
+.spec .count{margin-left:auto;font-family:var(--fn);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.spec .row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.spec .btn{height:var(--ctl-h);padding:0 14px;border-radius:var(--r-btn);font-weight:600;font-size:14px;font-family:var(--fu);border:var(--hair) solid transparent;cursor:pointer;display:inline-flex;align-items:center;justify-content:center}
+.spec .btn.primary{background:var(--y);color:var(--ink)}
+.spec .btn.secondary{background:transparent;border-color:var(--border);color:var(--text)}
+.spec .meta{display:flex;gap:8px;margin-top:12px;align-items:center}
+.spec .chip{font-size:12px;padding:3px 9px;border-radius:var(--r-chip);background:var(--raised);border:1px solid var(--border);color:var(--muted);font-family:var(--fn);font-variant-numeric:tabular-nums}
+.spec .tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:var(--r-tag);background:var(--y);color:var(--ink)}
+.spec .toast{position:relative;z-index:2;margin:-16px auto 0;width:fit-content;max-width:94%;display:flex;gap:8px;align-items:center;font-size:12.5px;background:var(--raised);color:var(--text);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);box-shadow:var(--float);padding:9px 12px}
+.spec .toast svg{color:var(--y);flex:none}
+/* phone frame */
+.phone-frame{background:#111;border:2px solid #333;border-radius:24px;padding:8px;position:relative;overflow:hidden}
+.phone-notch{width:80px;height:6px;background:#333;border-radius:3px;margin:0 auto 8px}
+/* replay button */
+.replay-btn{background:#262626;color:#e9e9e4;border:1px solid #3a3a3a;border-radius:6px;padding:5px 12px;font:600 12px Poppins,sans-serif;cursor:pointer;margin-top:6px}
+.replay-btn:hover{background:#3a3a3a}
+/* motion styles */
+.wipe-bar{position:absolute;top:0;left:-100%;width:100%;height:100%;background:#ffe330;z-index:1}
+@keyframes wipe{0%{left:-100%}40%{left:0}60%{left:0}100%{left:100%}}
+@keyframes fadeSlideUp{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@keyframes pressScale{0%{transform:scale(1)}50%{transform:scale(.98)}100%{transform:scale(1)}}
+@keyframes confettiFall{0%{transform:translateY(0) rotate(0deg);opacity:1}100%{transform:translateY(40px) rotate(360deg);opacity:0}}
+@keyframes sparkBurst{0%{transform:scale(0);opacity:1}100%{transform:scale(1.5);opacity:0}}
+@keyframes gridPulse{0%,100%{opacity:.08}50%{opacity:.2}}
+.mot-a-opt,.mot-b-opt,.mot-c-opt{transition:background 180ms ease,transform 180ms ease}
+.mot-a-opt:hover,.mot-b-opt:hover,.mot-c-opt:hover{background:var(--hover)}
+.mot-a-btn:active,.mot-b-btn:active,.mot-c-btn:active{transform:scale(.98);transition:transform 120ms}
+.mot-b-btn:hover,.mot-c-btn:hover{transform:translateY(-2px);transition:transform 200ms cubic-bezier(0.22,1,0.36,1)}
+@media (prefers-reduced-motion:reduce){
+  .wipe-bar,.confetti-container,.bg-grid,.cursor-spot{display:none!important}
+  *{animation:none!important;transition:none!important}
+}
+</style></head><body>
+<header><h1>eox-vote style decisions - <em>round 2</em></h1>
+<p>Every specimen renders with the round-1 dark tokens you chose (Poppins, Jobs surfaces #1f1f1f, 2px #3a3a3a borders, role radii 4/6/12, #ffe330 accent). Pick a letter per question in the terminal.</p>
+<nav class="toc"><a href="#q0">0. Round-1 picks</a><a href="#q7">7. Density</a><a href="#q8">8. Casing</a><a href="#q9">9. Status colours</a><a href="#q10">10. Motion</a><a href="#q11">11. Emphasis</a><a href="#q12">12. Navigation</a></nav></header>
+<section id="q0"><h2><span>0</span>Your round-1 picks</h2>
+<p class="q">The eox-vote ballot rendered with every round-1 decision applied.</p>
+<p class="ev">Dark default (#1f1f1f background, Jobs surfaces), derived light opt-in (#f5f5f2), Poppins only, role radii 4/6/12, 2px borders, floating shadows, #ffe330 accent, C+B colour rule. All tokens from the contract above.</p>
+<div class="grid c2" style="grid-template-columns:1fr 1fr">
+<div class="tile"><div class="th"><b>Dark (default)</b><span>Jobs surfaces &middot; <code>mploy globals.css:19-39</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div>
+</div>
+<div class="tile"><div class="th"><b>Light (opt-in)</b><span>MonMap derived &middot; <code>monmap globals.css:94-175</code></span></div>
+<div class="spec" style="--page:#f5f5f2;--card:#ffffff;--raised:#efeeea;--border:#d9d7d0;--hair:2px;--text:#252525;--muted:#6b6a65;--y:#ffe330;--ink:#252525;--emph:#252525;--field:#f8f8f6;--hover:#ebeae5;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:0 1px 0 rgba(0,0,0,.02),0 4px 10px -4px rgba(37,37,37,.12),0 6px 14px -8px rgba(37,37,37,.12);--float:0 12px 32px rgba(37,37,37,.16);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div>
+</div></div>
+
+<!-- C+B colour rule demo -->
+<div class="tile" style="margin-top:16px"><div class="th"><b>C+B colour rule in one viewport</b><span>At most one pastel (C) moment per viewport; other illustrated moment uses mascot on neutral (B). <code>QuickLinksSection.tsx:39-92</code>, <code>.impeccable.md:15</code></span></div>
+<div class="cb-demo" style="background:var(--page,#1f1f1f);border-radius:12px;overflow:hidden;border:2px solid #3a3a3a">
+  <!-- Pastel panel (C) near top -->
+  <div style="background:#DAD4FF;color:#252525;padding:32px 28px;border-radius:48px 24px 24px 80px;margin:16px;display:flex;align-items:center;gap:20px;position:relative;min-height:140px;">
+    <div><div style="font:800 22px/1.1 Poppins,sans-serif;letter-spacing:-.02em">Cast your vote</div><div style="font-size:13px;opacity:.7;margin-top:6px">Three projects. One winner. You decide.</div></div>
+    <img src="../assets/mascots/study/min-arms-up.svg" style="height:100px;position:absolute;right:16px;bottom:-8px" alt="Min arms up">
+  </div>
+  <!-- Gap simulating scroll -->
+  <div style="padding:16px 28px">
+    <div style="background:#2e2e2e;border:2px solid #3a3a3a;border-radius:12px;padding:16px;color:#fff;font-family:Poppins,sans-serif">
+      <div style="font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:rgba(255,255,255,.65)">Results</div>
+      <div style="font:700 17px/1.2 Poppins,sans-serif;margin:6px 0">MonMap wins</div>
+      <div style="height:8px;border-radius:99px;background:#262626;margin:6px 0;overflow:hidden"><i style="display:block;height:100%;width:43%;background:#ffe330;border-radius:inherit"></i></div>
+    </div>
+  </div>
+  <!-- Mascot on neutral (B) - second illustrated moment -->
+  <div style="padding:0 28px 24px;display:flex;align-items:center;gap:16px">
+    <img src="../assets/mascots/site/min-sad.svg" style="height:80px" alt="Min sad">
+    <div style="color:#fff;font-family:Poppins,sans-serif">
+      <div style="font:600 15px Poppins,sans-serif">No active ballots</div>
+      <div style="font-size:13px;color:rgba(255,255,255,.65)">Check back when the committee opens the next round.</div>
+    </div>
+  </div>
+</div>
+<div class="note">Top: pastel panel (C) with mascot - <code>#DAD4FF</code> lavender, organic radius 48/24/24/80px. Bottom: second illustrated moment uses mascot on neutral card (B), not a second pastel. Rule: "use B when C is already used within one viewport."</div>
+</div>
+</section>
+<section id="q7"><h2><span>7</span>Density</h2>
+<p class="q">How tall are controls, and how much breathing room between elements?</p>
+<p class="ev">MonMap: <code>button.tsx</code> sizes sm 32px / default 36px / lg 40px, <code>CLAUDE.md:108-111</code> touch targets >= 44px. Jobs: <code>.auth-required-primary</code> min-height 40px. Study: <code>h-10</code> (40px) nudges, <code>h-11</code>/<code>h-12</code> hero CTAs, <code>design-system.md:37</code> 44px min touch.</p>
+<div class="grid c3">
+<div class="tile"><div class="th"><b>A - Compact (36px controls)</b><span>MonMap default &middot; <code>button.tsx</code>, <code>CLAUDE.md:108-111</code></span></div>
+<div class="pair"><div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note" style="margin-top:6px">Desktop: 36px buttons, text-sm, tight spacing</div></div>
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;font-size:13px;max-width:390px;margin:0 auto">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:17px">Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel" style="min-height:44px"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt" style="min-height:44px"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt" style="min-height:44px"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary" style="min-height:44px;">Cast vote</button><button class="btn secondary" style="min-height:44px">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="note" style="margin-top:6px">Phone 390px: 44px tap targets on options</div></div></div></div>
+
+<div class="tile"><div class="th"><b>B - Comfortable (40px controls)</b><span>Jobs, Study default &middot; <code>globals.css .auth-required-primary</code>, Study <code>h-10</code></span></div>
+<div class="pair"><div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:40px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note" style="margin-top:6px">Desktop: 40px buttons, text-base</div></div>
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:40px;font-size:14px;max-width:390px;margin:0 auto">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:17px">Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel" style="min-height:44px"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt" style="min-height:44px"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt" style="min-height:44px"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary" style="min-height:44px;">Cast vote</button><button class="btn secondary" style="min-height:44px">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="note" style="margin-top:6px">Phone 390px: 44px tap targets, comfortable</div></div></div></div>
+
+<div class="tile"><div class="th"><b>C - Touch-first (44-48px everywhere)</b><span>Study hero CTAs &middot; <code>h-11</code>/<code>h-12</code>, <code>design-system.md:37</code></span></div>
+<div class="pair"><div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:48px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note" style="margin-top:6px">Desktop: 48px buttons everywhere</div></div>
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:48px;font-size:15px;max-width:390px;margin:0 auto">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:17px">Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel" style="min-height:44px"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt" style="min-height:44px"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt" style="min-height:44px"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary" style="min-height:44px;width:100%">Cast vote</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="note" style="margin-top:6px">Phone 390px: full-width primary, 48px taps</div></div></div></div>
+</div></section>
+<section id="q8"><h2><span>8</span>Casing</h2>
+<p class="q">How is text capitalised in navigation, headings, buttons, and dialogs?</p>
+<p class="ev">Site: buttons <code>UPPERCASE text-sm font-extrabold tracking-[0.09em]</code> (<code>Hero.tsx:684</code>), headings Title Case. MonMap and Study: sentence case, uppercase only for micro-labels (<code>CLAUDE.md:114</code>). Jobs: Title Case buttons "Apply Now", "Copy Link".</p>
+<div class="grid c3">
+<div class="tile"><div class="th"><b>A - UPPERCASE buttons, Title Case headings</b><span>site &middot; <code>Hero.tsx:684</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b>
+    <span class="nav on">BALLOTS</span><span class="nav">RESULTS</span><span class="avatar"></span></div>
+  <div class="card">
+    <div style="font:700 22px/1.1 Poppins,sans-serif;letter-spacing:-.01em;color:var(--text);margin-bottom:8px">Project Of The Year</div>
+    <div style="background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);padding:12px;margin-bottom:10px">
+      <div style="font:600 15px Poppins,sans-serif;color:var(--text);margin-bottom:4px">Best New Feature</div>
+      <div style="font-size:13px;color:var(--muted)">3 options - closes Friday</div>
+    </div>
+    <div class="row"><button class="btn primary" style="text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:0.09em">CAST VOTE</button><button class="btn secondary" style="text-transform:uppercase;font-size:12px;font-weight:800;letter-spacing:0.09em">VIEW RESULTS</button></div>
+    <div style="margin-top:12px;background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);padding:10px 12px;font-size:13px;color:var(--text)">
+      <div style="font:600 14px Poppins,sans-serif;margin-bottom:2px">Confirm Your Vote</div>
+      <div style="color:var(--muted);font-size:12px">Are you sure you want to submit?</div>
+    </div>
+  </div>
+</div>
+<div class="note">Loud buttons draw the eye. Headings formal. <code>Hero.tsx:684 text-sm font-extrabold tracking-[0.09em] uppercase</code></div></div>
+
+<div class="tile"><div class="th"><b>B - Sentence case everywhere</b><span>MonMap, Study &middot; <code>CLAUDE.md:114</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b>
+    <span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div style="font:700 22px/1.1 Poppins,sans-serif;letter-spacing:-.01em;color:var(--text);margin-bottom:8px">Project of the year</div>
+    <div style="background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);padding:12px;margin-bottom:10px">
+      <div style="font:600 15px Poppins,sans-serif;color:var(--text);margin-bottom:4px">Best new feature</div>
+      <div style="font-size:13px;color:var(--muted)">3 options - closes Friday</div>
+    </div>
+    <div class="row"><button class="btn primary" style="">Cast vote</button><button class="btn secondary" style="">View results</button></div>
+    <div style="margin-top:12px;background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);padding:10px 12px;font-size:13px;color:var(--text)">
+      <div style="font:600 14px Poppins,sans-serif;margin-bottom:2px">Confirm your vote</div>
+      <div style="color:var(--muted);font-size:12px">Are you sure you want to submit?</div>
+    </div>
+  </div>
+</div>
+<div class="note">Calm, readable, lowercase-leaning. Uppercase reserved for micro-labels (LIVE, VOTING OPEN). <code>MonMap CLAUDE.md:114</code>, Study convention.</div></div>
+
+<div class="tile"><div class="th"><b>C - Title Case buttons and headings</b><span>Jobs &middot; "Apply Now", "Copy Link"</span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b>
+    <span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div style="font:700 22px/1.1 Poppins,sans-serif;letter-spacing:-.01em;color:var(--text);margin-bottom:8px">Project Of The Year</div>
+    <div style="background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);padding:12px;margin-bottom:10px">
+      <div style="font:600 15px Poppins,sans-serif;color:var(--text);margin-bottom:4px">Best New Feature</div>
+      <div style="font-size:13px;color:var(--muted)">3 options - closes Friday</div>
+    </div>
+    <div class="row"><button class="btn primary" style="">Cast Vote</button><button class="btn secondary" style="">View results</button></div>
+    <div style="margin-top:12px;background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);padding:10px 12px;font-size:13px;color:var(--text)">
+      <div style="font:600 14px Poppins,sans-serif;margin-bottom:2px">Confirm Your Vote</div>
+      <div style="color:var(--muted);font-size:12px">Are you sure you want to submit?</div>
+    </div>
+  </div>
+</div>
+<div class="note">Every significant word capitalised. Buttons feel like labels. Jobs pattern: "Apply Now", "Copy Link".</div></div>
+</div></section>
+<section id="q9"><h2><span>9</span>Status colours</h2>
+<p class="q">How do success, danger, warning, info, and live states look on the dark surfaces?</p>
+<p class="ev">MonMap: oklch triplets base/foreground/soft, <code>globals.css:202-213</code>, destructive <code>oklch(0.7 0.19 22)</code>. Study: hex <code>#42d392</code> success, <code>#ff6b6b</code> danger, <code>#6cb6ff</code> info, <code>#ff7a00</code> live; fills 7-12%, borders 45-55% (<code>globals.css:18-20</code>). Jobs: active=yellow 14% fill, win <code>#9ddfb0</code> 14% fill, loss <code>rgba(255,115,81,.9)</code> 10% fill, neutral white/65 6% fill (<code>globals.css:32-39</code>); no warning/info tokens.</p>
+<div class="grid c3">
+<div class="tile"><div class="th"><b>A - MonMap oklch triplets</b><span><code>monmap globals.css:202-213</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:oklch(0.55 0.15 250/.12);color:oklch(0.75 0.15 250);border:1px solid oklch(0.55 0.15 250/.3)">Open</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:oklch(0.65 0.18 55/.12);color:oklch(0.8 0.15 70);border:1px solid oklch(0.65 0.18 55/.3)">Closing soon</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:oklch(0.55 0.15 155/.12);color:oklch(0.75 0.15 155);border:1px solid oklch(0.55 0.15 155/.3)">Voted</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.1)">Closed</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:oklch(0.55 0.15 155/.15);color:oklch(0.8 0.15 155);border:1px solid oklch(0.55 0.15 155/.4)">Winner</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:oklch(0.7 0.19 22/.12);color:oklch(0.7 0.19 22);border:1px solid oklch(0.7 0.19 22/.3)">Disqualified</span>
+  </div>
+  <!-- Inline form error -->
+  <div style="font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:6px;color:oklch(0.7 0.19 22)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> You must select an option before voting</div>
+  <!-- Success toast -->
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pnl);margin-bottom:8px;background:oklch(0.55 0.15 155/.12);color:oklch(0.8 0.15 155);border:1px solid oklch(0.55 0.15 155/.3)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:12.5px">Vote saved successfully</span></div>
+  <!-- Info banner -->
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pnl);margin-bottom:10px;background:oklch(0.55 0.15 250/.1);color:oklch(0.75 0.15 250);border:1px solid oklch(0.55 0.15 250/.25)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span style="font-size:12.5px">Results will be announced at the AGM</span></div>
+  <!-- Results bar chart -->
+  <div style="font:600 13px Poppins,sans-serif;margin-bottom:4px">Results</div>
+  <div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>MonMap</span><span>43%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:43%;border-radius:inherit;background:oklch(0.8 0.15 155)"></i></div></div>
+  <div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>MAC Study</span><span>32%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:32%;border-radius:inherit;background:rgba(255,255,255,.2)"></i></div></div>
+  <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>Jobs Board</span><span>25%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:25%;border-radius:inherit;background:rgba(255,255,255,.2)"></i></div></div>
+</div>
+<div class="note">Perceptually uniform oklch. Each status has base/foreground/soft. Destructive <code>oklch(0.7 0.19 22)</code>.</div></div>
+
+<div class="tile"><div class="th"><b>B - Study hex palette</b><span><code>mac-study globals.css:18-20</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(108,182,255,.1);color:#6cb6ff;border:1px solid rgba(108,182,255,.5)">Open</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,122,0,.1);color:#ff7a00;border:1px solid rgba(255,122,0,.5)">Closing soon</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(66,211,146,.1);color:#42d392;border:1px solid rgba(66,211,146,.5)">Voted</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.5);border:1px solid rgba(255,255,255,.12)">Closed</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(66,211,146,.12);color:#42d392;border:1px solid rgba(66,211,146,.55)">Winner</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,107,107,.1);color:#ff6b6b;border:1px solid rgba(255,107,107,.5)">Disqualified</span>
+  </div>
+  <!-- Inline form error -->
+  <div style="font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:6px;color:#ff6b6b"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> You must select an option before voting</div>
+  <!-- Success toast -->
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pnl);margin-bottom:8px;background:rgba(66,211,146,.1);color:#42d392;border:1px solid rgba(66,211,146,.5)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:12.5px">Vote saved successfully</span></div>
+  <!-- Info banner -->
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pnl);margin-bottom:10px;background:rgba(108,182,255,.08);color:#6cb6ff;border:1px solid rgba(108,182,255,.4)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span style="font-size:12.5px">Results will be announced at the AGM</span></div>
+  <!-- Results bar chart -->
+  <div style="font:600 13px Poppins,sans-serif;margin-bottom:4px">Results</div>
+  <div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>MonMap</span><span>43%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:43%;border-radius:inherit;background:#42d392"></i></div></div>
+  <div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>MAC Study</span><span>32%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:32%;border-radius:inherit;background:rgba(255,255,255,.2)"></i></div></div>
+  <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>Jobs Board</span><span>25%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:25%;border-radius:inherit;background:rgba(255,255,255,.2)"></i></div></div>
+</div>
+<div class="note">Vivid hex: <code>#42d392</code> success, <code>#ff6b6b</code> danger, <code>#6cb6ff</code> info, <code>#ff7a00</code> live. Fills 7-12%, borders 45-55%.</div></div>
+
+<div class="tile"><div class="th"><b>C - Jobs role colours</b><span><code>mploy globals.css:32-39</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px">
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,227,48,.14);color:#ffe330;border:1px solid rgba(255,227,48,.4)">Open</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,115,81,.1);color:rgba(255,115,81,.9);border:1px solid rgba(255,115,81,.4)">Closing soon</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(157,223,176,.14);color:#9ddfb0;border:1px solid rgba(157,223,176,.4)">Voted</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.12)">Closed</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(157,223,176,.14);color:#9ddfb0;border:1px solid rgba(157,223,176,.45)">Winner</span>
+    <span style="font-size:11px;font-weight:600;padding:3px 9px;border-radius:4px;background:rgba(255,115,81,.1);color:rgba(255,115,81,.9);border:1px solid rgba(255,115,81,.35)">Disqualified</span>
+  </div>
+  <!-- Inline form error -->
+  <div style="font-size:12px;margin-bottom:8px;display:flex;align-items:center;gap:6px;color:rgba(255,115,81,.9)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg> You must select an option before voting</div>
+  <!-- Success toast -->
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pnl);margin-bottom:8px;background:rgba(157,223,176,.14);color:#9ddfb0;border:1px solid rgba(157,223,176,.4)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg><span style="font-size:12.5px">Vote saved successfully</span></div>
+  <!-- Info banner -->
+  <div style="display:flex;align-items:center;gap:8px;padding:8px 12px;border-radius:var(--r-pnl);margin-bottom:10px;background:rgba(255,255,255,.06);color:rgba(255,255,255,.65);border:1px solid rgba(255,255,255,.12)"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg><span style="font-size:12.5px">Results will be announced at the AGM</span></div>
+  <!-- Results bar chart -->
+  <div style="font:600 13px Poppins,sans-serif;margin-bottom:4px">Results</div>
+  <div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>MonMap</span><span>43%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:43%;border-radius:inherit;background:#ffe330"></i></div></div>
+  <div style="margin-bottom:4px"><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>MAC Study</span><span>32%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:32%;border-radius:inherit;background:rgba(255,255,255,.15)"></i></div></div>
+  <div><div style="display:flex;justify-content:space-between;font-size:12px;margin-bottom:2px"><span>Jobs Board</span><span>25%</span></div><div style="height:8px;border-radius:99px;background:var(--raised);overflow:hidden"><i style="display:block;height:100%;width:25%;border-radius:inherit;background:rgba(255,255,255,.15)"></i></div></div>
+</div>
+<div class="note">Yellow=active (14% fill), <code>#9ddfb0</code>=win (14%), <code>rgba(255,115,81,.9)</code>=loss (10%), white/65=neutral (6%). Missing: no dedicated warning/info tokens.</div></div>
+</div></section>
+<section id="q10"><h2><span>10</span>Motion</h2>
+<p class="q">How much animation does eox-vote use?</p>
+<p class="ev">Study: <code>design-system.md:45</code> 120-220ms fades, &lt;= 8px translate, press scale .98. MonMap: <code>button active:translate-y-px</code>. Site: <code>.impeccable.md:25-28</code> yellow-bar text-reveal wipe, -2px hover lift, 45deg arrow kick. Jobs: <code>globals.css apps-column-confetti</code> 1180ms confetti burst.</p>
+<div class="grid c3">
+<div class="tile"><div class="th"><b>A - Functional only</b><span>Study, MonMap &middot; <code>design-system.md:45</code>, <code>button active:translate-y-px</code></span></div>
+<div class="spec" id="motion-a" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <div class="opt mot-a-opt" data-mot="a">MonMap</div>
+    <div class="opt mot-a-opt" data-mot="a">MAC Study</div>
+    <div class="row"><button class="btn primary mot-a-btn">Cast vote</button></div>
+  </div>
+</div>
+<button class="replay-btn" onclick="replayMotion('a')">Replay</button>
+<div class="note">120-220ms opacity/transform. Press scale(.98). &lt;= 8px translate. <code>prefers-reduced-motion</code> disables all.</div></div>
+
+<div class="tile"><div class="th"><b>B - Functional + signature hero moments</b><span>Site wipe + Jobs confetti &middot; <code>.impeccable.md:25-28</code>, <code>globals.css apps-column-confetti</code></span></div>
+<div class="spec" id="motion-b" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <h3 class="mot-b-reveal" style="position:relative;overflow:hidden">Project of the year<span class="wipe-bar"></span></h3>
+    <div class="opt mot-b-opt">MonMap</div>
+    <div class="row"><button class="btn primary mot-b-btn">Cast vote</button></div>
+    <div class="mot-b-result" style="margin-top:8px;opacity:0">
+      <div style="font:700 16px Poppins,sans-serif">MonMap wins!</div>
+      <div class="confetti-container" style="position:relative;height:40px;overflow:hidden"></div>
+    </div>
+  </div>
+</div>
+<button class="replay-btn" onclick="replayMotion('b')">Replay</button>
+<div class="note">A's functional base + yellow-bar headline wipe, -2px hover lift, confetti burst on winner reveal (1180ms <code>cubic-bezier(0.2,0.9,0.25,1)</code>).</div></div>
+
+<div class="tile"><div class="th"><b>C - Full expressive</b><span>B + ambient effects &middot; site Squares grid, cursor spotlight</span></div>
+<div class="spec" id="motion-c" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;position:relative;overflow:hidden">
+  <canvas class="bg-grid" width="300" height="200" style="position:absolute;inset:0;width:100%;height:100%;opacity:.15;pointer-events:none"></canvas>
+  <div class="cursor-spot" style="position:absolute;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,rgba(255,227,48,.12),transparent 70%);pointer-events:none;opacity:0;transition:opacity .3s"></div>
+  <div style="position:relative;z-index:1">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <h3 class="mot-c-reveal" style="position:relative;overflow:hidden">Project of the year<span class="wipe-bar"></span></h3>
+    <div class="opt mot-c-opt">MonMap</div>
+    <div class="row"><button class="btn primary mot-c-btn mot-spark">Cast vote</button></div>
+    <div class="mot-c-result" style="margin-top:8px;opacity:0">
+      <div style="font:700 16px Poppins,sans-serif">MonMap wins!</div>
+      <div class="confetti-container" style="position:relative;height:40px;overflow:hidden"></div>
+    </div>
+  </div>
+  </div>
+</div>
+<button class="replay-btn" onclick="replayMotion('c')">Replay</button>
+<div class="note">B + animated background grid (site Squares), cursor-follow spotlight, yellow click sparks on every click. All honour <code>prefers-reduced-motion</code>.</div></div>
+</div></section>
+<section id="q11"><h2><span>11</span>Emphasis flourish</h2>
+<p class="q">How does eox-vote highlight a hero headline?</p>
+<p class="ev">Site hero: <code>#ffe330</code> background, <code>#252525</code> text highlighter blocks. Jobs: <code>.underline-fancy</code> 2px thick, 4px offset (<code>globals.css:49-55</code>). Study login: second sentence in <code>#ffe330</code>. MonMap: no flourish.</p>
+<div class="grid c4">
+<div class="tile"><div class="th"><b>A - Highlighter blocks</b><span>site hero &middot; <code>Hero.tsx</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="font:800 26px/1.15 Poppins,sans-serif;letter-spacing:-.025em;margin-bottom:8px">Cast your <span style="background:#ffe330;color:#252525;padding:0 5px;border-radius:3px">vote</span> for the <span style="background:#ffe330;color:#252525;padding:0 5px;border-radius:3px">future</span></div>
+  <p style="font-size:14px;color:var(--muted);margin:0">Three projects. One winner. Your vote decides which MAC project leads next semester.</p>
+</div>
+<div class="note">Yellow highlighter on key words. Immediate eye anchor. <code>site Hero.tsx</code> hero pattern.</div></div>
+
+<div class="tile"><div class="th"><b>B - Yellow underline</b><span>Jobs &middot; <code>globals.css:49-55</code></span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="font:800 26px/1.15 Poppins,sans-serif;letter-spacing:-.025em;margin-bottom:8px">Cast your <span style="text-decoration:underline;text-decoration-color:#ffe330;text-underline-offset:4px;text-decoration-thickness:2px">vote</span> for the <span style="text-decoration:underline;text-decoration-color:#ffe330;text-underline-offset:4px;text-decoration-thickness:2px">future</span></div>
+  <p style="font-size:14px;color:var(--muted);margin:0">Three projects. One winner. Your vote decides which MAC project leads next semester.</p>
+</div>
+<div class="note">Subtle yellow underline, 2px thick, 4px offset. <code>Jobs .underline-fancy globals.css:49-55</code>.</div></div>
+
+<div class="tile"><div class="th"><b>C - Yellow text line</b><span>Study login &middot; second sentence yellow</span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="font:800 26px/1.15 Poppins,sans-serif;letter-spacing:-.025em;margin-bottom:8px">Cast your vote for the future</div>
+  <p style="font-size:14px;margin:0"><span style="color:var(--muted)">Three projects. One winner. </span><span style="color:#ffe330">Your vote decides which MAC project leads next semester.</span></p>
+</div>
+<div class="note">Second sentence / sub-line in <code>#ffe330</code> on dark. Study login pattern.</div></div>
+
+<div class="tile"><div class="th"><b>D - None</b><span>MonMap</span></div>
+<div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div style="font:800 26px/1.15 Poppins,sans-serif;letter-spacing:-.025em;margin-bottom:8px">Cast your vote for the future</div>
+  <p style="font-size:14px;color:var(--muted);margin:0">Three projects. One winner. Your vote decides which MAC project leads next semester.</p>
+</div>
+<div class="note">No flourish. Type weight and size alone create hierarchy. MonMap approach.</div></div>
+</div></section>
+<section id="q12"><h2><span>12</span>Navigation pattern</h2>
+<p class="q">How does the user move between pages?</p>
+<p class="ev">MonMap: <code>app-header.tsx</code> h-14 sticky top bar + Sheet on mobile. Jobs: <code>nav-bar</code> + <code>nav-bar-mobile</code> same pattern. Study: <code>.mac-mobile-nav</code> 60px fixed bottom tab bar + safe area, <code>app-shell.tsx</code>. Site: <code>Navigation.tsx:219-301</code> floating header island + fullscreen overlay menu.</p>
+<div class="grid c3">
+<div class="tile"><div class="th"><b>A - Top bar + mobile sheet menu</b><span>MonMap, Jobs &middot; <code>app-header.tsx</code>, <code>nav-bar</code></span></div>
+<div class="pair">
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;min-height:180px">
+  <div style="display:flex;align-items:center;gap:12px;font-size:13px;padding:0 0 12px;border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--page);z-index:2;height:56px">
+    <span class="logo"></span><b style="font:600 15px Poppins,sans-serif">eox-vote</b>
+    <span style="color:var(--text);font-weight:500;margin-left:16px">Ballots</span>
+    <span style="color:var(--muted)">Results</span>
+    <span style="color:var(--muted)">About</span>
+    <span class="avatar" style="margin-left:auto"></span>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:16px">Project of the year</h3>
+  </div>
+</div><div class="note" style="margin-top:6px">Desktop: h-14 sticky top bar</div></div>
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;max-width:390px;min-height:240px;position:relative">
+  <div style="display:flex;align-items:center;gap:10px;font-size:13px;height:56px;border-bottom:1px solid var(--border)">
+    <span class="logo"></span><b style="font:600 14px Poppins,sans-serif">eox-vote</b>
+    <div style="margin-left:auto;width:28px;height:28px;display:grid;place-items:center;cursor:pointer">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </div>
+  </div>
+  <!-- Sheet menu overlay -->
+  <div style="position:absolute;bottom:0;left:0;right:0;background:var(--card);border:var(--hair) solid var(--border);border-radius:var(--r-pnl) var(--r-pnl) 0 0;padding:12px;box-shadow:var(--float);z-index:3">
+    <div style="width:32px;height:4px;border-radius:2px;background:var(--border);margin:0 auto 12px"></div>
+    <div style="padding:10px 12px;border-radius:var(--r-ctl);background:var(--hover);font-weight:500;font-size:14px">Ballots</div>
+    <div style="padding:10px 12px;font-size:14px;color:var(--muted)">Results</div>
+    <div style="padding:10px 12px;font-size:14px;color:var(--muted)">About</div>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:15px">Project of the year</h3>
+  </div>
+</div><div class="note" style="margin-top:6px">Phone: hamburger opens bottom Sheet</div></div>
+</div></div>
+
+<div class="tile"><div class="th"><b>B - Top bar desktop, bottom tabs phone</b><span>Study &middot; <code>.mac-mobile-nav</code> 60px, <code>app-shell.tsx</code></span></div>
+<div class="pair">
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;min-height:180px">
+  <div style="display:flex;align-items:center;gap:12px;font-size:13px;padding:0 0 12px;border-bottom:1px solid var(--border);height:56px">
+    <span class="logo"></span><b style="font:600 15px Poppins,sans-serif">eox-vote</b>
+    <span style="color:var(--text);font-weight:500;margin-left:16px">Ballots</span>
+    <span style="color:var(--muted)">Results</span>
+    <span style="color:var(--muted)">About</span>
+    <span class="avatar" style="margin-left:auto"></span>
+  </div>
+  <div class="card" style="margin-top:12px">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:16px">Project of the year</h3>
+  </div>
+</div><div class="note" style="margin-top:6px">Desktop: standard top bar</div></div>
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;max-width:390px;min-height:260px;padding-bottom:72px;position:relative">
+  <div style="display:flex;align-items:center;gap:10px;font-size:13px;height:48px">
+    <span class="logo"></span><b style="font:600 14px Poppins,sans-serif">eox-vote</b>
+    <span class="avatar" style="margin-left:auto"></span>
+  </div>
+  <div class="card" style="margin-top:8px">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:15px">Project of the year</h3>
+    <p style="font-size:12px">Pick one. You can change your vote until it closes.</p>
+  </div>
+  <!-- Fixed bottom tab bar -->
+  <div style="position:absolute;bottom:0;left:0;right:0;height:60px;background:var(--card);border-top:1px solid var(--border);display:flex;justify-content:space-around;align-items:center;padding-bottom:env(safe-area-inset-bottom,0)">
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--y);font-size:10px;font-weight:600">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20V10M18 20V4M6 20v-4"/></svg>
+      Ballots
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:10px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/></svg>
+      Results
+    </div>
+    <div style="display:flex;flex-direction:column;align-items:center;gap:2px;color:var(--muted);font-size:10px">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></svg>
+      About
+    </div>
+  </div>
+</div><div class="note" style="margin-top:6px">Phone: fixed 60px bottom tab bar + safe area</div></div>
+</div></div>
+
+<div class="tile"><div class="th"><b>C - Floating island + fullscreen overlay</b><span>site &middot; <code>Navigation.tsx:219-301</code></span></div>
+<div class="pair">
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;min-height:180px;position:relative">
+  <!-- Floating island header -->
+  <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:16px;background:rgba(46,46,46,.85);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:999px;padding:6px 8px 6px 14px;font-size:13px;z-index:2;white-space:nowrap">
+    <span class="logo" style="width:20px;height:20px"></span>
+    <span style="color:var(--text);font-weight:500">Ballots</span>
+    <span style="color:var(--muted)">Results</span>
+    <span style="color:var(--muted)">About</span>
+    <span class="avatar" style="width:28px;height:28px"></span>
+  </div>
+  <div class="card" style="margin-top:52px">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:16px">Project of the year</h3>
+  </div>
+</div><div class="note" style="margin-top:6px">Desktop: floating pill island header</div></div>
+<div><div class="spec" style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#262626;--hover:#3a3a3a;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 48px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px;max-width:390px;min-height:280px;position:relative;overflow:hidden">
+  <!-- Floating island -->
+  <div style="position:absolute;top:8px;left:50%;transform:translateX(-50%);display:flex;align-items:center;gap:10px;background:rgba(46,46,46,.9);backdrop-filter:blur(12px);border:1px solid var(--border);border-radius:999px;padding:6px 8px 6px 14px;font-size:13px;z-index:3;white-space:nowrap">
+    <span class="logo" style="width:18px;height:18px"></span>
+    <b style="font:600 13px Poppins,sans-serif">eox-vote</b>
+    <div style="width:26px;height:26px;display:grid;place-items:center">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 12h18M3 6h18M3 18h18"/></svg>
+    </div>
+  </div>
+  <!-- Fullscreen overlay -->
+  <div style="position:absolute;inset:0;background:rgba(31,31,31,.97);z-index:2;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:20px">
+    <div style="font:700 28px Poppins,sans-serif;color:var(--text)">Ballots</div>
+    <div style="font:500 24px Poppins,sans-serif;color:var(--muted)">Results</div>
+    <div style="font:500 24px Poppins,sans-serif;color:var(--muted)">About</div>
+  </div>
+  <div class="card" style="margin-top:48px">
+    <div class="eyebrow">Voting open</div>
+    <h3 style="font-size:15px">Project of the year</h3>
+  </div>
+</div><div class="note" style="margin-top:6px">Phone: island + fullscreen overlay menu</div></div>
+</div></div>
+</div></section>
+<script>
+// Motion demos
+const ease = 'cubic-bezier(0.22,1,0.36,1)';
+const overlayEase = 'cubic-bezier(0.76,0,0.24,1)';
+
+function replayMotion(type) {
+  if (type === 'a') {
+    const opts = document.querySelectorAll('#motion-a .mot-a-opt');
+    opts.forEach((o, i) => {
+      o.style.opacity = '0';
+      o.style.transform = 'translateY(8px)';
+      setTimeout(() => {
+        o.style.transition = `opacity 180ms ${ease}, transform 180ms ${ease}`;
+        o.style.opacity = '1';
+        o.style.transform = 'translateY(0)';
+      }, 80 * i);
+    });
+    const btn = document.querySelector('#motion-a .mot-a-btn');
+    setTimeout(() => {
+      btn.style.transition = 'transform 120ms ease';
+      btn.style.transform = 'scale(.98)';
+      setTimeout(() => { btn.style.transform = 'scale(1)'; }, 150);
+    }, 400);
+  }
+  if (type === 'b' || type === 'c') {
+    const prefix = type === 'b' ? '#motion-b' : '#motion-c';
+    // Wipe bar
+    const wipe = document.querySelector(`${prefix} .wipe-bar`);
+    if (wipe) {
+      wipe.style.animation = 'none';
+      wipe.offsetHeight;
+      wipe.style.animation = `wipe 800ms ${overlayEase} forwards`;
+    }
+    // Options fade in
+    const opts = document.querySelectorAll(`${prefix} .mot-${type}-opt`);
+    opts.forEach((o, i) => {
+      o.style.opacity = '0';
+      o.style.transform = 'translateY(6px)';
+      setTimeout(() => {
+        o.style.transition = `opacity 180ms ${ease}, transform 180ms ${ease}`;
+        o.style.opacity = '1';
+        o.style.transform = 'translateY(0)';
+      }, 300 + 80 * i);
+    });
+    // Result + confetti
+    const result = document.querySelector(`${prefix} .mot-${type}-result`);
+    if (result) {
+      result.style.opacity = '0';
+      setTimeout(() => {
+        result.style.transition = `opacity 300ms ${ease}`;
+        result.style.opacity = '1';
+        // Confetti
+        const cc = result.querySelector('.confetti-container');
+        if (cc) {
+          cc.innerHTML = '';
+          const colors = ['#ffe330','#5757d3','#ff6b6b','#42d392','#6cb6ff'];
+          for (let i = 0; i < 20; i++) {
+            const p = document.createElement('div');
+            p.style.cssText = `position:absolute;width:6px;height:6px;border-radius:${Math.random()>.5?'50%':'1px'};background:${colors[i%5]};left:${Math.random()*100}%;top:0;animation:confettiFall ${800+Math.random()*400}ms cubic-bezier(0.2,0.9,0.25,1) ${Math.random()*200}ms forwards`;
+            cc.appendChild(p);
+          }
+        }
+      }, 800);
+    }
+    // Sparks for C
+    if (type === 'c') {
+      const sparkBtn = document.querySelector(`${prefix} .mot-spark`);
+      if (sparkBtn) {
+        setTimeout(() => {
+          for (let i = 0; i < 6; i++) {
+            const s = document.createElement('div');
+            const angle = (i/6)*Math.PI*2;
+            const dist = 20+Math.random()*15;
+            s.style.cssText = `position:absolute;width:4px;height:4px;border-radius:50%;background:#ffe330;pointer-events:none;z-index:10;animation:sparkBurst 400ms ease forwards`;
+            s.style.left = (sparkBtn.offsetLeft+sparkBtn.offsetWidth/2+Math.cos(angle)*dist)+'px';
+            s.style.top = (sparkBtn.offsetTop+sparkBtn.offsetHeight/2+Math.sin(angle)*dist)+'px';
+            sparkBtn.closest('.spec').appendChild(s);
+            setTimeout(() => s.remove(), 500);
+          }
+        }, 500);
+      }
+    }
+  }
+}
+
+// Init grid canvas for motion C
+function initGrid() {
+  const canvas = document.querySelector('#motion-c .bg-grid');
+  if (!canvas) return;
+  const ctx = canvas.getContext('2d');
+  const w = canvas.width = canvas.offsetWidth;
+  const h = canvas.height = canvas.offsetHeight;
+  const step = 20;
+  let frame = 0;
+  function draw() {
+    ctx.clearRect(0,0,w,h);
+    ctx.strokeStyle = 'rgba(255,227,48,0.15)';
+    ctx.lineWidth = 0.5;
+    for (let x = 0; x < w; x += step) {
+      for (let y = 0; y < h; y += step) {
+        const pulse = Math.sin(frame*0.02 + x*0.01 + y*0.01) * 0.5 + 0.5;
+        ctx.globalAlpha = pulse * 0.3;
+        ctx.strokeRect(x, y, step, step);
+      }
+    }
+    frame++;
+    requestAnimationFrame(draw);
+  }
+  if (!window.matchMedia('(prefers-reduced-motion: reduce)').matches) draw();
+}
+
+// Cursor spotlight for motion C
+function initSpotlight() {
+  const spec = document.getElementById('motion-c');
+  if (!spec) return;
+  const spot = spec.querySelector('.cursor-spot');
+  if (!spot || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  spec.addEventListener('mouseenter', () => { spot.style.opacity = '1'; });
+  spec.addEventListener('mouseleave', () => { spot.style.opacity = '0'; });
+  spec.addEventListener('mousemove', (e) => {
+    const r = spec.getBoundingClientRect();
+    spot.style.left = (e.clientX - r.left - 60) + 'px';
+    spot.style.top = (e.clientY - r.top - 60) + 'px';
+  });
+}
+
+// Auto-play all on load
+window.addEventListener('DOMContentLoaded', () => {
+  initGrid();
+  initSpotlight();
+  setTimeout(() => replayMotion('a'), 500);
+  setTimeout(() => replayMotion('b'), 800);
+  setTimeout(() => replayMotion('c'), 1100);
+});
+</script>
+</body></html>
