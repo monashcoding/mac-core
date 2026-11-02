@@ -299,10 +299,10 @@ Tailwind v4 theme aliases map directly onto three functional roles rather than a
 |---|---|---|---|
 | MAC brand logo (badge) | PNG | monmap: packages/webapp/public/brand-logo.png | Navbar breadcrumb badge (28x28px circular) |
 | MAC logo (vector) | SVG | mploy-app: frontend/public/mac.svg | Primary header brand logo (40x40px) |
-| Min mascot (arms up) | SVG | monashcoding-site: public/mascot/min-arms-up.svg | Empty states, confirmation dialogs |
-| Min mascot (404 / sad) | SVG | mploy-app: frontend/public/min-404.svg; site: public/mascot/min-sad.svg | 404 not found and system error views |
-| Max mascot (join MAC) | SVG | monashcoding-site: public/mascot/max-join-mac.svg | Hero CTA peek animation |
-| Fluid blob clip-paths | SVG | monashcoding-site: public/variant-1.svg to variant-6.svg | Marketing and sponsor organic imagery |
+| Min and Max mascots (21 poses) | SVG | This repo: [`assets/mascots/`](assets/mascots/README.md), copied from monashcoding-site `public/mascot/`, mac-study `public/mascots/` and a Figma export | Empty, error and celebration states. Use `study/` for small sizes (it has more poses) and `site/` for large hero art |
+| Min 404 | SVG | [`assets/mascots/site/min-404.svg`](assets/mascots/site/min-404.svg) | 404 not found views |
+| Max join MAC | SVG | [`assets/mascots/site/max-join-mac.svg`](assets/mascots/site/max-join-mac.svg) | Hero CTA peek animation |
+| Fluid blob clip-paths | SVG | monashcoding-site: public/cutouts/variant-1.svg to variant-6.svg | Marketing and sponsor organic imagery |
 
 ### 7.2 Permitted contexts for illustration
 

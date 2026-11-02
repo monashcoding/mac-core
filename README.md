@@ -8,7 +8,7 @@ One visual language for Monash Association of Coding apps, unified from four exi
 | [`decisions/`](decisions) | What was asked, the options, where each option came from, and the answers. [Round 1](decisions/round-1.md) covers visual identity; [round 2](decisions/round-2.md) covers components, voice and motion. |
 | [`boards/`](boards) | The comparison boards used to ask the questions. Open them in a browser; they load Poppins from Google Fonts. |
 | [`research/`](research) | Per-app styling audits with line-level citations, live screenshots, and the [Poppins tabular figures check](research/poppins-tabular-figures.md). |
-| [`assets/mascots/`](assets/mascots) | Min and Max SVGs used by the boards, copied from monashcoding-site `public/mascot/` and mac-study `public/mascots/` at the commits below. |
+| [`assets/mascots/`](assets/mascots/README.md) | All 21 Min and Max SVGs found in MAC sources (monashcoding-site, mac-study and a Figma export), with a preview index. |
 
 ## Sources
 
