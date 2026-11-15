@@ -1,0 +1,40 @@
+{
+  "name": "@monashcoding/features",
+  "version": "0.1.0",
+  "description": "A typed feature registry for MAC apps, gated by PostHog flags and mac-auth roles.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": { "type": "git", "url": "git+https://github.com/monashcoding/mac-core.git", "directory": "packages/features" },
+  "publishConfig": { "access": "public" },
+  "files": ["dist"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./posthog": { "types": "./dist/posthog.d.ts", "default": "./dist/posthog.js" },
+    "./react": { "types": "./dist/react.d.ts", "default": "./dist/react.js" },
+    "./sync": { "types": "./dist/sync.d.ts", "default": "./dist/sync.js" }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "posthog-node": ">=5.60.0",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "posthog-node": { "optional": true },
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@monashcoding/tsconfig": "workspace:*",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "posthog-node": "^5.60.0",
+    "react": "^19.3.1",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
