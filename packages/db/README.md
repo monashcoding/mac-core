@@ -11,6 +11,7 @@ Postgres for MAC apps through Drizzle. Connects to the shared server, encrypts s
 * [Reading and writing encrypted values](#reading-and-writing-encrypted-values)
 * [Looking up by an encrypted value](#looking-up-by-an-encrypted-value)
 * [Rotating keys](#rotating-keys)
+* [Listing rows with filters, sorting and paging](#listing-rows-with-filters-sorting-and-paging)
 * [Running migrations](#running-migrations)
 * [Creating a database for a new app](#creating-a-database-for-a-new-app)
 
@@ -149,6 +150,76 @@ pnpm mac-db generate-key
 
 ```bash
 MAC_DATA_KEYS=v2:<new key>,v1:<old key>
+```
+
+## Listing rows with filters, sorting and paging
+
+Declare what a list can be filtered and sorted by. The query string can then reach nothing else.
+
+```ts
+// lib/lists.ts
+import { defineList, filter } from "@monashcoding/db/list";
+import { z } from "zod";
+
+export const unitList = defineList({
+  table: unit,
+  // A unique column. Breaks ties so paging never skips or repeats a row.
+  id: unit.code,
+  // ?sort=title&dir=desc
+  sorts: { code: unit.code, title: unit.title, credit: unit.creditPoints },
+  defaultSort: "code",
+  filters: {
+    faculty: filter.equals(unit.faculty),                        // ?faculty=IT
+    level: filter.oneOf(unit.level, z.coerce.number().int()),    // ?level=1,2
+    minCredit: filter.atLeast(unit.creditPoints),                // ?minCredit=12
+    offered: filter.flag(unit.offered),                          // ?offered=true
+    q: filter.contains(unit.code, unit.title),                   // ?q=data
+    // q: filter.fullText(unit.searchVector),                    // on a tsvector column
+  },
+  pageSize: 25,
+});
+```
+
+```tsx
+// app/units/page.tsx
+export default async function Units({ searchParams }: PageProps<"/units">) {
+  const params = unitList.parse(await searchParams);   // invalid values are dropped
+  const page = await unitList.query(db, params);
+
+  return (
+    <>
+      <a href={unitList.href(params, { sort: "title" })}>Sort by title</a>
+      <a href={unitList.href(params, { filters: { faculty: "IT" } })}>IT only</a>
+
+      {page.rows.map((row) => <UnitRow key={row.code} unit={row} />)}
+
+      {page.nextCursor && <a href={unitList.href(params, { after: page.nextCursor })}>Next</a>}
+    </>
+  );
+}
+```
+
+```ts
+// A total, when the page shows one
+const total = await unitList.count(db, params);
+
+// Limit a list to what the user may see
+const mine = await planList.query(db, params, eq(plan.macUserId, claims.macUserId));
+
+// Your own query (joins, a projection): take the clauses, then let the list build the page
+const { where, orderBy, limit } = unitList.clauses(params);
+const rows = await db.select({ code: unit.code, title: unit.title }).from(unit).where(where).orderBy(...orderBy).limit(limit);
+const page = unitList.page(rows, params);
+```
+
+Each sort needs an index on the sort column and the id, and each `contains` column a trigram index.
+
+```ts
+export const unit = pgTable("unit", { /* ... */ }, (table) => [
+  index("unit_title_code_idx").on(table.title, table.code),
+  index("unit_credit_code_idx").on(table.creditPoints, table.code),
+  index("unit_title_trgm_idx").using("gin", sql`${table.title} gin_trgm_ops`),
+]);
 ```
 
 ## Running migrations

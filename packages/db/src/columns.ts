@@ -12,10 +12,16 @@ export function macUserId(name = "mac_user_id") {
   return text(name);
 }
 
-/** `created_at` and `updated_at`. Spread into a table definition. */
+/**
+ * `created_at` and `updated_at`. Spread into a table definition.
+ *
+ * Millisecond precision, the most a JavaScript Date holds, so a
+ * timestamp read from a row compares equal to the stored one. Keyset
+ * paging on `created_at` depends on that.
+ */
 export const timestamps = {
-  createdAt: timestamp("created_at", { withTimezone: true }).notNull().defaultNow(),
-  updatedAt: timestamp("updated_at", { withTimezone: true })
+  createdAt: timestamp("created_at", { withTimezone: true, precision: 3 }).notNull().defaultNow(),
+  updatedAt: timestamp("updated_at", { withTimezone: true, precision: 3 })
     .notNull()
     .defaultNow()
     .$onUpdate(() => new Date()),

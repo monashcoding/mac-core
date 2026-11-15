@@ -11,6 +11,7 @@
   "bin": { "mac-db": "./dist/cli.js" },
   "exports": {
     ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./list": { "types": "./dist/list.d.ts", "default": "./dist/list.js" },
     "./crypto": { "types": "./dist/crypto.d.ts", "default": "./dist/crypto.js" },
     "./provision": { "types": "./dist/provision.d.ts", "default": "./dist/provision.js" }
   },
