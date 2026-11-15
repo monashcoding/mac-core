@@ -6,11 +6,14 @@ import type { EventProperties } from "./properties";
 export interface PostHogClient {
   init(token: string, config: Partial<PostHogConfig>): void;
   capture(event: string, properties?: EventProperties): void;
+  register(properties: EventProperties): void;
   identify(distinctId: string): void;
   reset(): void;
 }
 
 export interface AnalyticsOptions {
+  /** The app's name. Sent as the `app` property of every event, so one PostHog project holds every MAC app. */
+  readonly app: string;
   /** PostHog project token. PostHog stays off when omitted. */
   readonly posthogToken?: string | undefined;
   /** Google Analytics measurement id (`G-...`). GA stays off when omitted. */
@@ -131,7 +134,7 @@ const isProduction = typeof process !== "undefined" && process.env.NODE_ENV === 
  * is idle, so it stays off the first-load bundle and never delays the
  * first interaction. Calls made before then wait for it.
  */
-export function createAnalytics(options: AnalyticsOptions = {}): Analytics {
+export function createAnalytics(options: AnalyticsOptions): Analytics {
   const enabled = options.enabled ?? isProduction;
   const token = options.posthogToken;
   const load = options.loadPostHog ?? importPostHog;
@@ -149,6 +152,7 @@ export function createAnalytics(options: AnalyticsOptions = {}): Analytics {
       .then(load)
       .then((client) => {
         client.init(projectToken, config);
+        client.register({ app: options.app });
 
         return client;
       })

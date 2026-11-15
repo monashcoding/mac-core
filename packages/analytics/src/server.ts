@@ -9,6 +9,8 @@ export interface PostHogServerClient {
 }
 
 export interface ServerAnalyticsOptions {
+  /** The app's name. Sent as the `app` property of every event. */
+  readonly app: string;
   /** PostHog project token. Nothing is sent when omitted. */
   readonly posthogToken?: string | undefined;
   readonly host?: string | undefined;
@@ -32,7 +34,7 @@ function createPostHog(token: string, host: string | undefined): PostHogServerCl
   return new PostHog(token, { ...(host ? { host } : undefined), flushAt: 1, flushInterval: 0 });
 }
 
-export function createServerAnalytics(options: ServerAnalyticsOptions = {}): ServerAnalytics {
+export function createServerAnalytics(options: ServerAnalyticsOptions): ServerAnalytics {
   const enabled = options.enabled ?? process.env.NODE_ENV === "production";
   const token = options.posthogToken;
   const create = options.createClient ?? createPostHog;
@@ -44,7 +46,7 @@ export function createServerAnalytics(options: ServerAnalyticsOptions = {}): Ser
       if (!enabled || !token) return;
 
       client ??= create(token, options.host);
-      client.capture({ distinctId: macUserId, event, ...(properties ? { properties } : undefined) });
+      client.capture({ distinctId: macUserId, event, properties: { ...properties, app: options.app } });
 
       await client.flush().catch(() => {
         // The event is lost; the caller carries on.

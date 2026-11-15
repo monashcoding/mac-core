@@ -31,6 +31,8 @@ Create one per app and import it wherever you capture events.
 import { createAnalytics } from "@monashcoding/analytics/client";
 
 export const analytics = createAnalytics({
+  // Sent with every event, so one PostHog project holds every MAC app
+  app: "monmap",
   // Leave either out to turn that service off
   posthogToken: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
   gaId: process.env.NEXT_PUBLIC_GA_ID,
@@ -112,6 +114,7 @@ export default {
 import { createServerAnalytics } from "@monashcoding/analytics/server";
 
 const analytics = createServerAnalytics({
+  app: "monmap",
   posthogToken: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
 });
 
