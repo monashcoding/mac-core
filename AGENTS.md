@@ -6,7 +6,9 @@ Shared packages for every MAC app. Published to npm as `@monashcoding/*`.
 |---|---|---|
 | `@monashcoding/auth` | `packages/auth` | mac-auth token verifier, session lookup, role guards, Next / Express / browser / React adapters |
 | `@monashcoding/analytics` | `packages/analytics` | PostHog and Google Analytics clients, the `/ingest` proxy |
-| `@monashcoding/db` | `packages/db` | Drizzle client, shared columns, encrypted columns, `mac-db` CLI |
+| `@monashcoding/db` | `packages/db` | Drizzle client, shared columns, encrypted columns, list queries, `mac-db` CLI |
+| `@monashcoding/features` | `packages/features` | Feature registry, PostHog flag source and sync, React components |
+| `@monashcoding/server` | `packages/server` | Env, errors, route wrappers, validation, rate limits, health, logging, jobs, caching |
 | `@monashcoding/lint` | `packages/lint` | Oxlint preset and the vendored anti-slop plugin |
 | `@monashcoding/tsconfig` | `packages/tsconfig` | TypeScript presets |
 
@@ -21,6 +23,8 @@ pnpm changeset    # describe a change for the next release
 
 ## Rules
 
+- `CONVENTIONS.md` is the rule set for apps built on these packages. A new package capability gets its rule there.
+- READMEs are usage only: a description, a table of contents, then one section per task with a commented code block.
 - Every package is a library an app calls. Nothing here owns an app's routes, schema or deploy.
 - A package never reads an app's files. Configuration comes in through function options, with environment variables as defaults.
 - Anything that talks to the network or the clock takes it as an option (`fetch`, `keys`, `loadPostHog`, `createClient`). Tests pass a fake through that option; `vi.mock` is a lint error.
