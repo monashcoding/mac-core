@@ -1,6 +1,6 @@
 {
   "name": "@monashcoding/auth",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MAC login for apps: verify mac-auth tokens, resolve the signed-in user, guard by role.",
   "license": "MIT",
   "type": "module",
