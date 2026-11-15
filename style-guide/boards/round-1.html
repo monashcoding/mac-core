@@ -1,0 +1,355 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><title>eox-vote style decisions - round 1</title><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..800&family=Poppins:wght@400;500;600;700;800;900&display=swap" rel="stylesheet"><style>
+:root{color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:#0d0d0d;color:#e9e9e4;font:15px/1.55 Inter,system-ui,sans-serif}
+header{padding:36px 40px 8px;max-width:1500px;margin:auto}
+header h1{font:800 34px/1.1 Poppins,sans-serif;margin:0 0 6px;letter-spacing:-.02em}
+header h1 em{font-style:normal;background:#ffe330;color:#252525;padding:0 6px;border-radius:4px}
+header p{color:#a9a9a1;max-width:900px;margin:6px 0}
+nav.toc{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 0}
+nav.toc a{color:#e9e9e4;text-decoration:none;border:1px solid #333;padding:4px 10px;border-radius:999px;font-size:13px}
+section{max-width:1500px;margin:auto;padding:28px 40px 36px;border-top:1px solid #222}
+h2{font:700 24px/1.2 Poppins,sans-serif;margin:0;display:flex;align-items:center;gap:12px}
+h2 span{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:50%;background:#ffe330;color:#252525;font-size:17px}
+p.q{font-size:17px;margin:8px 0 2px;color:#fff}
+p.ev{color:#9d9d95;font-size:13px;margin:4px 0 16px;max-width:1200px}
+code{font:12px ui-monospace,Consolas,monospace;background:#1d1d1d;border:1px solid #2c2c2c;padding:0 4px;border-radius:4px;color:#d9d9cf}
+.grid{display:grid;gap:16px}
+.c4{grid-template-columns:repeat(4,minmax(0,1fr))}.c3{grid-template-columns:repeat(3,minmax(0,1fr))}
+@media (max-width:1300px){.c4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+.tile{background:#151515;border:1px solid #262626;border-radius:12px;padding:12px;display:flex;flex-direction:column;gap:10px}
+.th{display:flex;flex-direction:column}
+.th b{font:700 15px Poppins,sans-serif;color:#fff}.th span{font-size:12px;color:#8f8f88;text-transform:uppercase;letter-spacing:.1em}
+.note{font-size:12.5px;color:#a3a39b;line-height:1.5}
+.gal{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px}
+.gal figure{margin:0}.gal img{width:100%;height:220px;object-fit:cover;object-position:top;border-radius:8px;border:1px solid #2a2a2a;display:block}
+.gal img[src*="mobile"]{object-fit:contain;background:#171717}
+.gal figcaption{font-size:12px;color:#8f8f88;margin-top:4px}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+/* ---------- specimen ---------- */
+.spec{background:var(--page);color:var(--text);font-family:var(--fu);padding:14px;border-radius:10px;position:relative;overflow:hidden}
+.spec.half{padding:10px;font-size:13px;zoom:.82}
+.spec.dim{outline:2px dashed #555;outline-offset:-2px}
+.spec .bar{display:flex;align-items:center;gap:12px;font-size:13px;margin-bottom:14px}
+.spec .logo{width:22px;height:22px;border-radius:50%;background:var(--y);flex:none}
+.spec .bar b{font-weight:600;font-family:var(--fd)}
+.spec .nav{color:var(--muted)}.spec .nav.on{color:var(--text);font-weight:500}
+.spec .avatar{margin-left:auto;width:24px;height:24px;border-radius:50%;background:linear-gradient(135deg,#5757d3,#ffe330)}
+.spec .card{background:var(--card);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);box-shadow:var(--shadow);padding:16px}
+.spec .card+.card{margin-top:10px}
+.spec .eyebrow{font-size:11px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}
+.spec h3{font-family:var(--fd);font-size:19px;font-weight:700;margin:6px 0 4px;letter-spacing:-.01em;color:var(--text)}
+.spec p{font-size:13px;color:var(--muted);margin:0 0 12px;line-height:1.5}
+.spec .opt{display:flex;align-items:center;gap:10px;height:var(--ctl-h);padding:0 12px;border:var(--hair) solid var(--border);border-radius:var(--r-ctl);margin-bottom:8px;font-size:14px;background:var(--field)}
+.spec .opt.sel{border-color:var(--emph);box-shadow:inset 0 0 0 1px var(--emph)}
+.spec .radio{width:16px;height:16px;border-radius:50%;border:2px solid var(--muted);flex:none}
+.spec .opt.sel .radio{border-color:var(--emph);background:radial-gradient(circle,var(--emph) 0 3.5px,transparent 4.5px)}
+.spec .count{margin-left:auto;font-family:var(--fn);font-variant-numeric:tabular-nums;color:var(--muted);font-size:13px}
+.spec .row{display:flex;gap:8px;margin-top:12px;flex-wrap:wrap}
+.spec .btn{height:var(--ctl-h);padding:0 14px;border-radius:var(--r-btn);font-weight:600;font-size:14px;font-family:var(--fu);border:var(--hair) solid transparent;cursor:pointer}
+.spec .btn.primary{background:var(--y);color:var(--ink)}
+.spec .btn.secondary{background:transparent;border-color:var(--border);color:var(--text)}
+.spec .meta{display:flex;gap:8px;margin-top:12px;align-items:center}
+.spec .chip{font-size:12px;padding:3px 9px;border-radius:var(--r-chip);background:var(--raised);border:1px solid var(--border);color:var(--muted);font-family:var(--fn);font-variant-numeric:tabular-nums}
+.spec .tag{font-size:10px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;padding:2px 6px;border-radius:var(--r-tag);background:var(--y);color:var(--ink)}
+.spec .pop{position:absolute;right:12px;top:42px;width:150px;background:var(--raised);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);box-shadow:var(--float);padding:5px;font-size:13px;z-index:2}
+.spec .pop div{padding:6px 9px;border-radius:var(--r-ctl);color:var(--text)}.spec .pop div.on{background:var(--hover)}
+.spec .display{font-family:var(--fd);font-weight:800;font-size:27px;line-height:1.08;letter-spacing:-.025em;margin:8px 0 8px}
+.spec .body{font-size:14px;color:var(--muted)}
+.spec .tally{border:1px solid var(--border);border-radius:8px;padding:6px 10px;background:var(--card)}
+.spec .tally div{display:flex;justify-content:space-between;padding:4px 0;font-size:15px}
+.spec .tally b{font-family:var(--fn);font-variant-numeric:tabular-nums;font-weight:600}
+.shapes{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;background:#101010;border-radius:10px;padding:12px;font-family:Poppins,sans-serif}
+.shapes div{display:flex;flex-direction:column;align-items:flex-start;gap:4px}
+.shapes em{font:11px ui-monospace,Consolas,monospace;color:#8f8f88;font-style:normal}
+.shapes .s-tag{font-size:10px;font-weight:700;letter-spacing:.1em;padding:2px 6px;border-radius:var(--r-tag);background:#ffe330;color:#252525}
+.shapes .s-chip{font-size:12px;padding:3px 10px;border-radius:var(--r-chip);background:#2a2a2a;border:1px solid #3a3a3a}
+.shapes .s-btn{font-size:13px;font-weight:600;padding:7px 12px;border-radius:var(--r-btn);background:#ffe330;color:#252525}
+.shapes .s-inp{font-size:12px;padding:7px 10px;border-radius:var(--r-inp);border:1px solid #3a3a3a;background:#272727;color:#8f8f88;width:100%}
+.shapes .s-card{width:100%;height:44px;border-radius:var(--r-pnl);border:1px solid #3a3a3a;background:#202020}
+.shapes .s-dlg{width:100%;height:44px;border-radius:var(--r-dlg);background:#2a2a2a;box-shadow:0 8px 20px rgba(0,0,0,.6)}
+.sw{display:flex;flex-wrap:wrap;gap:8px}
+.sw div{display:flex;gap:6px;align-items:center;font-size:11px;color:#a3a39b}
+.sw i{width:22px;height:22px;border-radius:5px;border:1px solid rgba(255,255,255,.18);display:block}
+.sw code{font-size:10.5px;padding:0 3px}
+.sw.mini{margin-top:10px}
+.spec .center{text-align:center;display:flex;flex-direction:column;align-items:center}
+.spec .masc{height:84px;margin:4px 0 2px}
+.spec .ico{display:grid;place-items:center;width:44px;height:44px;border-radius:var(--r-ctl);background:var(--raised);color:var(--muted);font-size:24px;margin-bottom:4px}
+.spec .winrow{display:flex;justify-content:space-between;align-items:center;margin:6px 0 10px;font-family:var(--fd);font-size:16px}
+.spec .bars{height:8px;border-radius:99px;background:var(--raised);margin:6px 0;overflow:hidden}
+.spec .bars i{display:block;height:100%;background:var(--y);border-radius:inherit}
+.spec .bars.dim i{background:var(--muted);opacity:.5}
+.pastels{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.pastels a{position:relative;min-height:120px;padding:16px;color:#252525;display:flex;flex-direction:column;overflow:hidden}
+.pastels b{font:800 20px/1 Poppins,sans-serif;letter-spacing:-.03em}.pastels span{font-size:12px;opacity:.7;margin-top:4px}
+.pastels img{position:absolute;right:-6px;bottom:-14px;height:78px}
+
+.spec .bar b{white-space:nowrap}
+.spec.half .nav:not(.on){display:none}
+.spec .toast{position:relative;z-index:2;margin:-16px auto 0;width:fit-content;max-width:94%;display:flex;gap:8px;align-items:center;font-size:12.5px;background:var(--raised);color:var(--text);border:var(--hair) solid var(--border);border-radius:var(--r-pnl);box-shadow:var(--float);padding:9px 12px}
+.spec .toast svg{color:var(--y);flex:none}
+</style></head><body>
+<header><h1>eox-vote style decisions - <em>round 1</em></h1>
+<p>Each tile renders the same eox-vote ballot with one app's real tokens (copied from its source). Pick a letter per question in the terminal. Round 2 (density, casing, status colours, motion, emphasis) renders in whatever you choose here.</p>
+<nav class="toc"><a href="#q0">0. The four apps today</a><a href="#q1">1. Theme mode</a><a href="#q2">2. Dark surfaces</a><a href="#q3">3. Typeface</a><a href="#q4">4. Radius</a><a href="#q5">5. Depth</a><a href="#q6">6. Colour breadth</a></nav></header>
+<section id="q0"><h2><span>0</span>The four apps today</h2><p class="ev">Live screenshots taken from monashcoding.com, monmap.monashcoding.com, study.monashcoding.com and jobs.monashcoding.com at 1440 x 900.</p><div class="gal"><figure><a href="../research/screenshots/site.png" target="_blank"><img src="../research/screenshots/site.png" loading="lazy"></a><figcaption>monashcoding.com - hero</figcaption></figure><figure><a href="../research/screenshots/site-2.png" target="_blank"><img src="../research/screenshots/site-2.png" loading="lazy"></a><figcaption>monashcoding.com - quick links + events</figcaption></figure><figure><a href="../research/screenshots/monmap-dark.png" target="_blank"><img src="../research/screenshots/monmap-dark.png" loading="lazy"></a><figcaption>MonMap - dark</figcaption></figure><figure><a href="../research/screenshots/monmap-light.png" target="_blank"><img src="../research/screenshots/monmap-light.png" loading="lazy"></a><figcaption>MonMap - light (warm paper)</figcaption></figure><figure><a href="../research/screenshots/study.png" target="_blank"><img src="../research/screenshots/study.png" loading="lazy"></a><figcaption>MAC Study - desktop login</figcaption></figure><figure><a href="../research/screenshots/study-mobile.png" target="_blank"><img src="../research/screenshots/study-mobile.png" loading="lazy"></a><figcaption>MAC Study - mobile login</figcaption></figure><figure><a href="../research/screenshots/mploy.png" target="_blank"><img src="../research/screenshots/mploy.png" loading="lazy"></a><figcaption>Jobs Board - home</figcaption></figure><figure><a href="../research/screenshots/mploy-jobs.png" target="_blank"><img src="../research/screenshots/mploy-jobs.png" loading="lazy"></a><figcaption>Jobs Board - listings</figcaption></figure></div></section>
+<section id="q1"><h2><span>1</span>Theme mode</h2><p class="q">Does eox-vote ship dark only, or light and dark?</p><p class="ev">Dark only: monashcoding-site (<code>.impeccable.md:17</code> "Dark only"), MAC Study (<code>globals.css:79</code> color-scheme: dark), Jobs (<code>layout.tsx:54</code> data-mantine-color-scheme="dark"). Light + dark: MonMap (<code>theme-provider.tsx</code> next-themes defaultTheme="system"; warm paper <code>#f5f5f2</code> light palette, <code>globals.css:94-234</code>).</p>
+<div class="grid c3"><div class="tile"><div class="th"><b>A - Dark only</b><span>site, Study, Jobs</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note">One palette to design, test and screenshot. Matches 3 of 4 apps and the site's brand doc.</div></div><div class="tile"><div class="th"><b>B - Light + dark, follows system</b><span>MonMap</span></div><div class="pair"><div class="spec half" style="--page:#f5f5f2;--card:#ffffff;--raised:#ffffff;--border:#d9d7d0;--hair:1px;--text:#252525;--muted:#6b6a65;--y:#ffe330;--ink:#252525;--emph:#252525;--field:#f8f8f6;--hover:#ebeae5;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:0 1px 0 rgba(0,0,0,.02),0 4px 10px -4px rgba(37,37,37,.12),0 6px 14px -8px rgba(37,37,37,.12);--float:0 12px 32px rgba(37,37,37,.16);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="spec half" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div></div><div class="note">Every token needs two values; MonMap's light palette is ready to reuse. Better for printing and bright rooms.</div></div><div class="tile"><div class="th"><b>C - Dark default, light opt-in</b><span>hybrid</span></div><div class="pair"><div class="spec half" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="spec half dim" style="--page:#f5f5f2;--card:#ffffff;--raised:#ffffff;--border:#d9d7d0;--hair:1px;--text:#252525;--muted:#6b6a65;--y:#ffe330;--ink:#252525;--emph:#252525;--field:#f8f8f6;--hover:#ebeae5;--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:0 1px 0 rgba(0,0,0,.02),0 4px 10px -4px rgba(37,37,37,.12),0 6px 14px -8px rgba(37,37,37,.12);--float:0 12px 32px rgba(37,37,37,.16);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div></div><div class="note">Brand-consistent first impression; light exists behind a toggle. Same token cost as B.</div></div></div></section><section id="q2"><h2><span>2</span>Dark surface ladder</h2><p class="q">Which page / card / raised colours (and text colours) does dark mode use?</p><p class="ev">Each app stacks its greys differently. The site's cards are <i>darker</i> than its page; the three apps lift cards <i>lighter</i> than the page. The toast under each card is the raised layer.</p>
+<div class="grid c4"><div class="tile"><div class="th"><b>A - Charcoal page, recessed cards</b><span>monashcoding-site</span></div><div class="spec " style="--page:#252525;--card:#1e1e1e;--raised:#141414;--border:rgba(255,255,255,.10);--hair:1px;--text:#ffffff;--muted:#a0a0a0;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#1a1a1a;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="sw"><div><i style="background:#252525"></i><span>page<br><code>#252525</code></span></div><div><i style="background:#1e1e1e"></i><span>card<br><code>#1e1e1e</code></span></div><div><i style="background:#141414"></i><span>raised<br><code>#141414</code></span></div><div><i style="background:white/10"></i><span>border<br><code>white/10</code></span></div><div><i style="background:#a0a0a0"></i><span>muted<br><code>#a0a0a0</code></span></div></div><div class="note"><code>globals.css:10</code>, <code>.impeccable.md:14</code> surfaces #1E1E1E/#1A1A1A</div></div><div class="tile"><div class="th"><b>B - Near-black page, lifted panels</b><span>MonMap dark</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="sw"><div><i style="background:#161616"></i><span>page<br><code>#161616</code></span></div><div><i style="background:#202020"></i><span>card<br><code>#202020</code></span></div><div><i style="background:#2a2a2a"></i><span>raised<br><code>#2a2a2a</code></span></div><div><i style="background:#383838"></i><span>border<br><code>#383838</code></span></div><div><i style="background:#a3a3a3"></i><span>muted<br><code>#a3a3a3</code></span></div></div><div class="note"><code>globals.css:181-217</code>; contrast-checked (text >= 7:1, muted >= 4.5:1)</div></div><div class="tile"><div class="th"><b>C - Near-black, warm hairlines</b><span>MAC Study</span></div><div class="spec " style="--page:#171717;--card:#1c1c1c;--raised:#232323;--border:#34342f;--hair:1px;--text:#f7f7f2;--muted:#a9a99f;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:rgba(255,255,255,.035);--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="sw"><div><i style="background:#171717"></i><span>page<br><code>#171717</code></span></div><div><i style="background:#1c1c1c"></i><span>card<br><code>#1c1c1c</code></span></div><div><i style="background:#232323"></i><span>raised<br><code>#232323</code></span></div><div><i style="background:#34342f"></i><span>border<br><code>#34342f</code></span></div><div><i style="background:#f7f7f2"></i><span>text<br><code>#f7f7f2</code></span></div><div><i style="background:#a9a99f"></i><span>muted<br><code>#a9a99f</code></span></div></div><div class="note"><code>globals.css:11-17</code>; olive-warm border and off-white text</div></div><div class="tile"><div class="th"><b>D - Mid-charcoal, chunky surfaces</b><span>Jobs Board</span></div><div class="spec " style="--page:#1f1f1f;--card:#2e2e2e;--raised:#262626;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe22f;--ink:#1f1f1f;--emph:#ffe22f;--field:#3a3a3a;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="sw"><div><i style="background:#1f1f1f"></i><span>page<br><code>#1f1f1f</code></span></div><div><i style="background:#2e2e2e"></i><span>card<br><code>#2e2e2e</code></span></div><div><i style="background:#262626"></i><span>soft<br><code>#262626</code></span></div><div><i style="background:#3a3a3a 2px"></i><span>border<br><code>#3a3a3a 2px</code></span></div><div><i style="background:white/65"></i><span>muted<br><code>white/65</code></span></div></div><div class="note"><code>globals.css:19-39</code>; yellow drifts to #ffe22f</div></div></div></section><section id="q3"><h2><span>3</span>Typeface</h2><p class="q">Which font family (or pairing) does eox-vote use?</p><p class="ev">Poppins: site (<code>layout.tsx:5-9</code>, 400-900, and <code>.impeccable.md:16</code> "Poppins only"), MonMap (<code>layout.tsx:12-18</code>), Jobs (<code>layout.tsx:47-50</code>). Inter/system: MAC Study (<code>globals.css:93-100</code>, never loaded, so Windows shows Segoe UI). <b>Checked in the font files:</b> Poppins has no <code>tnum</code> feature and its digits have different widths (320-635 units), so <code>tabular-nums</code> does nothing and live counts jitter. Inter has <code>tnum</code>. In the tally, every number has the same digit count: with tabular figures their left edges line up, with Poppins they stagger.</p>
+<div class="grid c4"><div class="tile"><div class="th"><b>A - Poppins only</b><span>site, MonMap, Jobs</span></div><div class="spec" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px"><div class="eyebrow">Voting open</div>
+<div class="display">Vote for the MAC project of the year</div>
+<p class="body">Pick one project. You can change your vote until the ballot closes on Friday at 5 pm.</p>
+<div class="tally"><div><span>MonMap</span><b>11,111</b></div><div><span>MAC Study</span><b>88,888</b></div><div><span>Jobs Board</span><b>47,104</b></div><div><span>Closes in</span><b>01:11:11</b></div><div><span>&nbsp;</span><b>08:48:08</b></div></div>
+<div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div></div><div class="note">Strongest brand match. Numbers stagger and jitter as they tick.</div></div><div class="tile"><div class="th"><b>B - Inter only</b><span>MAC Study (intended)</span></div><div class="spec" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Inter, system-ui, sans-serif;--fu:Inter, system-ui, sans-serif;--fn:Inter, system-ui, sans-serif;--ctl-h:36px"><div class="eyebrow">Voting open</div>
+<div class="display">Vote for the MAC project of the year</div>
+<p class="body">Pick one project. You can change your vote until the ballot closes on Friday at 5 pm.</p>
+<div class="tally"><div><span>MonMap</span><b>11,111</b></div><div><span>MAC Study</span><b>88,888</b></div><div><span>Jobs Board</span><b>47,104</b></div><div><span>Closes in</span><b>01:11:11</b></div><div><span>&nbsp;</span><b>08:48:08</b></div></div>
+<div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div></div><div class="note">Compact, neutral, true tabular figures. Loses the MAC brand voice.</div></div><div class="tile"><div class="th"><b>C - Poppins display + Inter UI</b><span>pairing</span></div><div class="spec" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Inter, system-ui, sans-serif;--fn:Inter, system-ui, sans-serif;--ctl-h:36px"><div class="eyebrow">Voting open</div>
+<div class="display">Vote for the MAC project of the year</div>
+<p class="body">Pick one project. You can change your vote until the ballot closes on Friday at 5 pm.</p>
+<div class="tally"><div><span>MonMap</span><b>11,111</b></div><div><span>MAC Study</span><b>88,888</b></div><div><span>Jobs Board</span><b>47,104</b></div><div><span>Closes in</span><b>01:11:11</b></div><div><span>&nbsp;</span><b>08:48:08</b></div></div>
+<div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div></div><div class="note">Brand headlines, dense readable UI, steady numbers. Two font files to load.</div></div><div class="tile"><div class="th"><b>D - Poppins + mono numerals</b><span>MAC Study timers</span></div><div class="spec" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;--ctl-h:36px"><div class="eyebrow">Voting open</div>
+<div class="display">Vote for the MAC project of the year</div>
+<p class="body">Pick one project. You can change your vote until the ballot closes on Friday at 5 pm.</p>
+<div class="tally"><div><span>MonMap</span><b>11,111</b></div><div><span>MAC Study</span><b>88,888</b></div><div><span>Jobs Board</span><b>47,104</b></div><div><span>Closes in</span><b>01:11:11</b></div><div><span>&nbsp;</span><b>08:48:08</b></div></div>
+<div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div></div><div class="note">One brand face; numbers in the system monospace, like Study's timer.</div></div></div></section><section id="q4"><h2><span>4</span>Corner radius scale</h2><p class="q">Which set of corner radii?</p><p class="ev">All four stay at or under 16px for UI; they differ in steps and where pills appear.</p>
+<div class="grid c4"><div class="tile"><div class="th"><b>A - Role scale 4 / 6 / 12</b><span>MonMap</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:6px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="shapes" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:6px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+<div><span class="s-tag">LIVE</span><em>tag 4px</em></div>
+<div><span class="s-chip">Closes 2d</span><em>chip 6px</em></div>
+<div><span class="s-btn">Cast vote</span><em>button 6px</em></div>
+<div><span class="s-inp">Search ballots</span><em>input 6px</em></div>
+<div><span class="s-card"></span><em>card 12px</em></div>
+<div><span class="s-dlg"></span><em>dialog 12px</em></div></div><div class="note"><code>globals.css:71-91</code>: rounded-tag, rounded-control, rounded-panel. Size names alias to roles so no third radius sneaks in. Pills only for avatars and dots.</div></div><div class="tile"><div class="th"><b>B - 8 / 10 / 12</b><span>MAC Study</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:8px;--r-pnl:10px;--r-chip:999px;--r-dlg:12px;--r-btn:8px;--r-inp:8px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="shapes" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:8px;--r-pnl:10px;--r-chip:999px;--r-dlg:12px;--r-btn:8px;--r-inp:8px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+<div><span class="s-tag">LIVE</span><em>tag 4px</em></div>
+<div><span class="s-chip">Closes 2d</span><em>chip 999px</em></div>
+<div><span class="s-btn">Cast vote</span><em>button 8px</em></div>
+<div><span class="s-inp">Search ballots</span><em>input 8px</em></div>
+<div><span class="s-card"></span><em>card 10px</em></div>
+<div><span class="s-dlg"></span><em>dialog 12px</em></div></div><div class="note"><code>design-system.md:14</code> controls 8, panels 10, dialogs 12; pills for chips and toasts.</div></div><div class="tile"><div class="th"><b>C - 6 buttons / 8 cards / 12 fields</b><span>monashcoding-site</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:6px;--r-ctl:6px;--r-pnl:8px;--r-chip:999px;--r-dlg:12px;--r-btn:6px;--r-inp:12px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="shapes" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:6px;--r-ctl:6px;--r-pnl:8px;--r-chip:999px;--r-dlg:12px;--r-btn:6px;--r-inp:12px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+<div><span class="s-tag">LIVE</span><em>tag 6px</em></div>
+<div><span class="s-chip">Closes 2d</span><em>chip 999px</em></div>
+<div><span class="s-btn">Cast vote</span><em>button 6px</em></div>
+<div><span class="s-inp">Search ballots</span><em>input 12px</em></div>
+<div><span class="s-card"></span><em>card 8px</em></div>
+<div><span class="s-dlg"></span><em>dialog 12px</em></div></div><div class="note"><code>.impeccable.md:18</code> rounded-md buttons, rounded-lg cards; inputs rounded-xl. Marketing blobs go to 48-190px.</div></div><div class="tile"><div class="th"><b>D - 8 / 12 / 16 + pills</b><span>Jobs Board</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:999px;--r-ctl:8px;--r-pnl:12px;--r-chip:999px;--r-dlg:16px;--r-btn:8px;--r-inp:10px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div>
+</div><div class="shapes" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:999px;--r-ctl:8px;--r-pnl:12px;--r-chip:999px;--r-dlg:16px;--r-btn:8px;--r-inp:10px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+<div><span class="s-tag">LIVE</span><em>tag 999px</em></div>
+<div><span class="s-chip">Closes 2d</span><em>chip 999px</em></div>
+<div><span class="s-btn">Cast vote</span><em>button 8px</em></div>
+<div><span class="s-inp">Search ballots</span><em>input 10px</em></div>
+<div><span class="s-card"></span><em>card 12px</em></div>
+<div><span class="s-dlg"></span><em>dialog 16px</em></div></div><div class="note">Cards rounded-xl, modals 1rem, chips 999px (<code>job-card.tsx:28</code>, <code>notes-modal.tsx:59</code>).</div></div></div></section><section id="q5"><h2><span>5</span>Depth and containment</h2><p class="q">How do cards and floating layers separate from the page?</p><p class="ev">Look at the card edge and at the toast floating over the card's bottom edge in each.</p>
+<div class="grid c4"><div class="tile"><div class="th"><b>A - Hairline + one soft card shadow</b><span>MonMap</span></div><div class="spec " style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:0 1px 0 rgba(0,0,0,.02),0 4px 10px -4px rgba(0,0,0,.6),0 6px 14px -8px rgba(0,0,0,.6);--float:0 10px 15px -3px rgba(0,0,0,.35),0 0 0 1px rgba(255,255,255,.08);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note"><code>globals.css:242-247</code> shadow-card everywhere; tint deepens in dark so it never glows.</div></div><div class="tile"><div class="th"><b>B - No shadows at all</b><span>monashcoding-site</span></div><div class="spec " style="--page:#252525;--card:#1e1e1e;--raised:#141414;--border:rgba(255,255,255,.10);--hair:1px;--text:#ffffff;--muted:#a0a0a0;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#1a1a1a;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:none;--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note"><code>.impeccable.md:17</code> "No drop shadows: depth comes from surface lightness steps, hairlines and hover lifts."</div></div><div class="tile"><div class="th"><b>C - Hairline + inset highlight; shadows only when floating</b><span>MAC Study</span></div><div class="spec " style="--page:#171717;--card:#1c1c1c;--raised:#232323;--border:#34342f;--hair:1px;--text:#f7f7f2;--muted:#a9a99f;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:rgba(255,255,255,.035);--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:inset 0 1px 0 rgba(255,255,255,.04);--float:0 16px 42px rgba(0,0,0,.38);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note"><code>globals.css:30</code> shadow-soft on panels; toasts, menus and dialogs get large soft shadows (<code>transient-toast.tsx:47</code>).</div></div><div class="tile"><div class="th"><b>D - Chunky 2px borders</b><span>Jobs Board</span></div><div class="spec " style="--page:#1f1f1f;--card:#2e2e2e;--raised:#2e2e2e;--border:#3a3a3a;--hair:2px;--text:#ffffff;--muted:rgba(255,255,255,.65);--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#3a3a3a;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 24px 72px rgba(0,0,0,.58);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px">
+  <div class="bar"><span class="logo"></span><b>eox-vote</b><span class="nav on">Ballots</span><span class="nav">Results</span><span class="avatar"></span></div>
+  <div class="card">
+    <div class="eyebrow">Voting open</div>
+    <h3>Project of the year</h3>
+    <p>Pick one. You can change your vote until it closes.</p>
+    <div class="opt sel"><span class="radio"></span>MonMap<span class="count">1,284</span></div>
+    <div class="opt"><span class="radio"></span>MAC Study<span class="count">961</span></div>
+    <div class="opt"><span class="radio"></span>Jobs Board<span class="count">711</span></div>
+    <div class="row"><button class="btn primary">Cast vote</button><button class="btn secondary">View results</button></div>
+    <div class="meta"><span class="tag">Live</span><span class="chip">Closes in 2d 04:12</span></div>
+  </div><div class="toast"><svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg>Vote saved. You can change it until Friday.</div>
+</div><div class="note"><code>job-card.tsx:27</code> bd="2px solid selected". (Its DESIGN.md says the opposite: no lines, tonal layers + glass. The code never adopted it.)</div></div></div></section><section id="q6"><h2><span>6</span>Colour breadth and personality</h2><p class="q">Beyond yellow and greys, what else is allowed?</p><p class="ev">Everyone agrees yellow is the only UI accent. They differ on illustration and secondary colour.</p>
+<div class="grid c3"><div class="tile"><div class="th"><b>A - Yellow + neutrals only</b><span>MonMap, Jobs</span></div><div class="spec" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px"><div class="card center"><span class="ico">&#9783;</span><h3>No ballots yet</h3><p>When the committee opens a ballot it shows up here.</p><button class="btn primary">Notify me</button></div>
+<div class="card win"><div class="eyebrow">Results</div><div class="winrow"><b>MonMap wins</b><span class="tag">Winner</span></div><div class="bars"><i style="width:43%"></i></div><div class="bars dim"><i style="width:32%"></i></div><div class="bars dim"><i style="width:25%"></i></div></div></div><div class="note">Status colours only where they mean something (<code>monmap globals.css:6-8</code>). Icons instead of illustrations.</div></div><div class="tile"><div class="th"><b>B - Add Min &amp; Max mascots (indigo arms)</b><span>Study login, site, Jobs 404</span></div><div class="spec" style="--page:#161616;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px"><div class="card center"><img class="masc" src="../assets/mascots/study/min-wave.svg"><h3>No ballots yet</h3><p>When the committee opens a ballot it shows up here.</p><button class="btn primary">Notify me</button></div>
+<div class="card win"><div class="eyebrow">Results</div><div class="winrow"><b>MonMap wins</b><span class="tag">Winner</span></div><div class="bars"><i style="width:43%"></i></div><div class="bars dim"><i style="width:32%"></i></div><div class="bars dim"><i style="width:25%"></i></div></div></div><div class="note">Indigo <code>#5757D3</code> lives only inside mascot art (<code>.impeccable.md:15</code>). Mascots appear in empty, error, and celebration states.</div></div><div class="tile"><div class="th"><b>C - Full site palette</b><span>monashcoding-site</span></div><div class="spec" style="--page:#252525;--card:#202020;--raised:#2a2a2a;--border:#383838;--hair:1px;--text:#ffffff;--muted:#a3a3a3;--y:#ffe330;--ink:#252525;--emph:#ffe330;--field:#272727;--hover:rgba(255,255,255,.06);--r-tag:4px;--r-ctl:6px;--r-pnl:12px;--r-chip:4px;--r-dlg:12px;--r-btn:6px;--r-inp:6px;--shadow:none;--float:0 16px 40px rgba(0,0,0,.5);--fd:Poppins, system-ui, sans-serif;--fu:Poppins, system-ui, sans-serif;--fn:Poppins, system-ui, sans-serif;--ctl-h:36px"><div class="pastels">
+<a style="background:#DAD4FF;border-radius:40px"><b>Ballots</b><span>3 open</span><img src="../assets/mascots/site/max-arms-up.svg"></a>
+<a style="background:#FFF0A3;border-radius:24px 80px 24px 24px"><b>Results</b><span>2 closed</span></a>
+<a style="background:#C8EED9;border-radius:80px 24px 24px 24px;padding-left:30px"><b>Nominate</b><span>Due Fri</span><img src="../assets/mascots/site/min-arms-up.svg"></a>
+<a style="background:#FFD3C2;border-radius:90px 90px 24px 24px;padding-top:34px;align-items:center"><b>Help</b><span>FAQ</span></a></div>
+<div class="sw mini"><div><i style="background:#DAD4FF"></i><span>#DAD4FF</span></div><div><i style="background:#FFF0A3"></i><span>#FFF0A3</span></div><div><i style="background:#C8EED9"></i><span>#C8EED9</span></div><div><i style="background:#FFD3C2"></i><span>#FFD3C2</span></div><div><i style="background:#CDE6FF"></i><span>#CDE6FF</span></div><div><i style="background:#5757D3"></i><span>#5757D3</span></div></div></div><div class="note">Pastel panels with charcoal ink, organic radii, mascots everywhere (<code>QuickLinksSection.tsx:39-92</code>). Loud and marketing-grade.</div></div></div></section>
+</body></html>
