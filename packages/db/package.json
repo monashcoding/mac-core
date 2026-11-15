@@ -1,0 +1,39 @@
+{
+  "name": "@monashcoding/db",
+  "version": "0.1.0",
+  "description": "Postgres for MAC apps: a Drizzle client, shared columns, encrypted columns and per-app provisioning.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": { "type": "git", "url": "git+https://github.com/monashcoding/mac-core.git", "directory": "packages/db" },
+  "publishConfig": { "access": "public" },
+  "files": ["dist"],
+  "bin": { "mac-db": "./dist/cli.js" },
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./crypto": { "types": "./dist/crypto.d.ts", "default": "./dist/crypto.js" },
+    "./provision": { "types": "./dist/provision.d.ts", "default": "./dist/provision.js" }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "peerDependencies": {
+    "drizzle-orm": ">=0.45.0",
+    "postgres": ">=3.4.5"
+  },
+  "devDependencies": {
+    "@electric-sql/pglite": "^0.5.16",
+    "@monashcoding/tsconfig": "workspace:*",
+    "@types/node": "^24.0.0",
+    "drizzle-orm": "^0.45.4",
+    "postgres": "^4.1.1",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
