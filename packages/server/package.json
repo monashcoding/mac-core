@@ -1,6 +1,6 @@
 {
   "name": "@monashcoding/server",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "The server plumbing every MAC app repeats: env, errors, validation, rate limits, health, logging, jobs and caching.",
   "license": "MIT",
   "type": "module",

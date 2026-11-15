@@ -1,6 +1,6 @@
 {
   "name": "@monashcoding/lint",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "MAC Oxlint preset with the vendored anti-slop rules.",
   "license": "MIT",
   "type": "module",

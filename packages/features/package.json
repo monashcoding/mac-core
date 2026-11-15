@@ -1,6 +1,6 @@
 {
   "name": "@monashcoding/features",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "A typed feature registry for MAC apps, gated by PostHog flags and mac-auth roles.",
   "license": "MIT",
   "type": "module",
