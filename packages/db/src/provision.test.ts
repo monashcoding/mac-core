@@ -11,9 +11,9 @@ describe("provisionStatements", () => {
       `CREATE ROLE "monmap" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION CONNECTION LIMIT 20 PASSWORD 'pw'`,
       `GRANT "monmap" TO CURRENT_USER`,
       `CREATE DATABASE "monmap" OWNER "monmap"`,
-      `REVOKE "monmap" FROM CURRENT_USER`,
       `REVOKE ALL ON DATABASE "monmap" FROM PUBLIC`,
       `GRANT CONNECT, TEMPORARY ON DATABASE "monmap" TO "monmap"`,
+      `REVOKE "monmap" FROM CURRENT_USER`,
     ]);
   });
 
