@@ -1,6 +1,6 @@
 {
   "name": "@monashcoding/db",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Postgres for MAC apps: a Drizzle client, shared columns, encrypted columns and per-app provisioning.",
   "license": "MIT",
   "type": "module",
