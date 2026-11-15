@@ -55,7 +55,7 @@ The dark theme is the default brand surface, following the Jobs surface ladder w
 | `--background` | `#1f1f1f` | Root viewport & app canvas | mploy-app: frontend/src/app/globals.css:21 |
 | `--surface-soft` | `#262626` | Grouped regions, columns, field backgrounds | mploy-app: frontend/src/app/globals.css:23 |
 | `--card` | `#2e2e2e` | Cards, list rows, dialogs, popovers, menus, toasts | mploy-app: frontend/src/app/globals.css:22 |
-| `--accent` | `#3a3a3a` | Hover wash, selected rows | mploy-app: frontend/src/app/globals.css:20 |
+| `--accent` | `#3a3a3a` | Hover wash, selected rows, active tab fill (§17.8) | mploy-app: frontend/src/app/globals.css:20 |
 | `--border` | `#3a3a3a` | 2px structural container borders | mploy-app: frontend/src/app/globals.css:24 |
 | `--border-strong` | `#4a4a4a` | Emphasized borders, active input boundaries | mploy-app: frontend/src/app/globals.css:25 |
 | `--foreground` | `#ffffff` | Primary readable text and high-contrast headings | mploy-app: frontend/src/app/globals.css; all repos |
@@ -66,7 +66,7 @@ The dark theme is the default brand surface, following the Jobs surface ladder w
 | `--primary-foreground` | `#252525` | High-contrast dark ink on yellow surfaces | monmap: packages/webapp/app/globals.css:97 |
 | `--field` | `#262626` | Input, select, and textarea fill | derived from `--surface-soft` |
 | `--ring` | `#ffe330` | Focus ring outline on dark surfaces | monmap: packages/webapp/app/globals.css:199 |
-| `--emphasis` | `#ffe330` | Underline-fancy and active tab accent | monmap: packages/webapp/app/globals.css:199 |
+| `--emphasis` | `#ffe330` | Underline-fancy | monmap: packages/webapp/app/globals.css:199 |
 
 ### 3.2 Light theme tokens (opt-in via `.light` class)
 
@@ -77,7 +77,7 @@ The light theme provides a warm-paper aesthetic adapted from MonMap:
 | `--background` | `#f5f5f2` | Warm paper canvas | monmap: packages/webapp/app/globals.css:100 |
 | `--surface-soft` | `#efeeea` | Grouped regions, secondary panels | monmap: packages/webapp/app/globals.css:118 |
 | `--card` | `#ffffff` | Clean white cards, dialogs, popovers | monmap: packages/webapp/app/globals.css:103 |
-| `--accent` | `#ebeae5` | Hover wash, selected row backgrounds | monmap: packages/webapp/app/globals.css:125 |
+| `--accent` | `#ebeae5` | Hover wash, selected row backgrounds, active tab fill (§17.8) | monmap: packages/webapp/app/globals.css:125 |
 | `--border` | `#d9d7d0` | 2px structural container borders | monmap: packages/webapp/app/globals.css:147 |
 | `--border-strong` | `#c8c6bf` | Emphasized borders, active input boundaries | derived for the light theme (round 1) |
 | `--foreground` | `#252525` | Primary charcoal text | monmap: packages/webapp/app/globals.css:101 |
@@ -624,10 +624,16 @@ const badgeVariants = cva(
 
 ### 17.8 Tabs
 
-*Adapted from monmap: packages/webapp/components/ui/tabs.tsx:27.*
+*Decision: one tab style, the flat segmented bar of eox-vote's Swipe / All switch, in place of the inset pills adapted from MonMap. Where a screen is built around photos, the bar goes below them.* (*eox-vote decision, 2026-11-15; eox-vote: components/ui/tabs.tsx*).
 
-- **List:** `inline-flex h-11 md:h-9 items-center justify-center rounded-control border-2 border-border bg-surface-soft p-1 text-muted`.
-- **Trigger:** `inline-flex items-center justify-center rounded-control border-2 border-transparent px-3 py-1 text-sm font-medium transition-colors data-active:border-border data-active:bg-card data-active:text-foreground`.
+For switching views within a screen; app navigation follows §14.
+
+- **List:** `grid w-full grid-flow-col auto-cols-fr items-center overflow-hidden rounded-control border-2 border-border bg-surface-soft text-muted md:h-9`. No inner padding: the tabs fill the bar edge to edge and share its width equally, and the rounded border frames and clips them.
+- **Trigger:** `inline-flex min-h-11 md:h-full md:min-h-0 items-center justify-center gap-1.5 px-3 py-1 text-sm font-medium transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring data-active:bg-accent data-active:font-semibold data-active:text-foreground`. No rounding, border or gap of its own.
+- **Active tab:** the `--accent` fill with semibold `--foreground` text. The weight change is its non-colour signal (§15, rule 4). No inset pill, selection border or yellow.
+- **Focus:** a solid 2px `--ring` ring inside the tab, because the bar clips anything drawn outside it.
+- **Long labels:** wrap onto a second line inside the 44px tab (`line-clamp-2 text-center leading-tight`) rather than truncating or making the bar taller.
+- **Placement:** below the content it switches whenever that content is photos, so the bar never takes height from them. A photo sized to fill the screen, like a swipe deck, keeps its full size: the bar sits under it, and several switches share that one bar (a tab per category beside All) instead of stacking a second row. Over a scrolling list the bar sticks to the bottom of the screen, above the safe area. A bar that switches between a form and a list may sit above the content.
 
 ### 17.9 Tooltip
 

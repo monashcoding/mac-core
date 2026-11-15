@@ -1,6 +1,6 @@
 # MAC style guide
 
-One visual language for Monash Association of Coding apps, unified from four existing MAC apps. The choices where those apps disagree were made for eox-vote, in two rounds of questions on 2026-11-02. Everything except the voting-specific components applies to any MAC app.
+One visual language for Monash Association of Coding apps, unified from four existing MAC apps. The choices where those apps disagree were made for eox-vote, in two rounds of questions on 2026-11-02; later decisions are dated where the guide states them. Everything except the voting-specific components applies to any MAC app.
 
 | Path | Contents |
 |---|---|
