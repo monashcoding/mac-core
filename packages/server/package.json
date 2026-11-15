@@ -1,0 +1,38 @@
+{
+  "name": "@monashcoding/server",
+  "version": "0.1.0",
+  "description": "The server plumbing every MAC app repeats: env, errors, validation, rate limits, health, logging, jobs and caching.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": { "type": "git", "url": "git+https://github.com/monashcoding/mac-core.git", "directory": "packages/server" },
+  "publishConfig": { "access": "public" },
+  "files": ["dist"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./express": { "types": "./dist/express.d.ts", "default": "./dist/express.js" }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "zod": "^4.6.7"
+  },
+  "peerDependencies": {
+    "express": ">=4"
+  },
+  "peerDependenciesMeta": {
+    "express": { "optional": true }
+  },
+  "devDependencies": {
+    "@monashcoding/tsconfig": "workspace:*",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "express": "^5.3.0",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
