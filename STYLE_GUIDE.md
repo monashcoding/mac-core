@@ -628,11 +628,13 @@ const badgeVariants = cva(
 
 For switching views within a screen; app navigation follows §14.
 
-- **List:** `grid w-full grid-flow-col auto-cols-fr items-center overflow-hidden rounded-control border-2 border-border bg-surface-soft text-muted md:h-9`. No inner padding: the tabs fill the bar edge to edge and share its width equally, and the rounded border frames and clips them.
-- **Trigger:** `inline-flex min-h-11 md:h-full md:min-h-0 items-center justify-center gap-1.5 px-3 py-1 text-sm font-medium transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring data-active:bg-accent data-active:font-semibold data-active:text-foreground`. No rounding, border or gap of its own.
+- **List:** `grid w-full grid-flow-col auto-cols-[minmax(min-content,1fr)] overflow-x-auto overscroll-x-contain rounded-control border-2 border-border bg-surface-soft text-muted [scrollbar-width:none] motion-safe:scroll-smooth md:min-h-9`. No inner padding: the tabs fill the bar edge to edge and share its width equally, and the rounded border frames and clips them.
+- **Trigger:** `relative inline-flex min-h-11 min-w-20 md:min-h-8 items-center justify-center gap-1.5 px-2 py-1 text-sm font-medium transition-colors hover:text-foreground focus-visible:ring-2 focus-visible:ring-inset focus-visible:ring-ring data-active:bg-accent data-active:font-semibold data-active:text-foreground`. No rounding, border or gap of its own.
 - **Active tab:** the `--accent` fill with semibold `--foreground` text. The weight change is its non-colour signal (§15, rule 4). No inset pill, selection border or yellow.
 - **Focus:** a solid 2px `--ring` ring inside the tab, because the bar clips anything drawn outside it.
-- **Long labels:** wrap onto a second line inside the 44px tab (`line-clamp-2 text-center leading-tight`) rather than truncating or making the bar taller.
+- **Long labels:** wrap onto a second line inside the 44px tab (`line-clamp-2 text-center leading-tight`), then end in an ellipsis, so the bar stays one row high. On desktop the 36px bar grows only when a label wraps.
+- **Many tabs:** a tab is never narrower than 5rem or its label's longest word. When the tabs don't fit at that width, the bar scrolls sideways with its scrollbar hidden, and the active tab scrolls to the middle whenever it changes, including when the app changes it (a finished deck moving on to the next category). Never squeeze labels, shrink the text or add a second row.
+- **Status marks:** a mark such as a finished category's check sits in the tab's top-right corner (`absolute top-1 right-1 size-3`), with screen reader text, so the label keeps the tab's full width.
 - **Placement:** below the content it switches whenever that content is photos, so the bar never takes height from them. A photo sized to fill the screen, like a swipe deck, keeps its full size: the bar sits under it, and several switches share that one bar (a tab per category beside All) instead of stacking a second row. Over a scrolling list the bar sticks to the bottom of the screen, above the safe area. A bar that switches between a form and a list may sit above the content.
 
 ### 17.9 Tooltip
