@@ -18,13 +18,14 @@ export const features = defineFeatures({
 });
 ```
 
-**`feature.kind`** A feature is one of three kinds.
+**`feature.kind`** A feature is one of four kinds.
 
 | Kind | Without a flag | Use for |
 |---|---|---|
 | `feature.release` | off | New work that is not ready for everyone |
 | `feature.killSwitch` | on | A shipped feature you may need to turn off in an incident |
 | `feature.staff` | on for its roles, off for everyone else | Committee, exec and admin tools |
+| `feature.members` | on for current club members, off for everyone else | Member-only perks |
 
 **`feature.expires`** A release feature carries the date its flag is deleted by. `features.expired()` is asserted empty in a test, so an overdue flag fails CI.
 
@@ -38,7 +39,7 @@ const features = await getFeatures();
 features.require("aiPlanner"); // 404 when off
 ```
 
-**`feature.roles-are-hard`** A staff feature's roles are a limit no flag can widen. Access control never depends on PostHog being reachable.
+**`feature.roles-are-hard`** A staff feature's roles and a members feature's membership are limits no flag can widen. Access control never depends on PostHog being reachable.
 
 **`feature.sync`** PostHog flags are created by `syncFlags(features)` from the registry, never by hand. A flag in PostHog that the registry does not know is reported as orphaned and deleted.
 
@@ -87,6 +88,8 @@ features.require("aiPlanner"); // 404 when off
 ## Auth
 
 **`auth.verify`** Tokens are verified by `@monashcoding/auth`. No app carries its own verifier.
+
+**`auth.club-member`** Member-only access is a check on the `clubMember` claim (`requireClubMember`, `feature.members`). The `member` role is every signed-in account and gates nothing. No app keeps its own member list.
 
 **`auth.roles`** Authorisation is a role check on the server (`requireClaims`, `requireAuth`, `feature.staff`). Email allowlists are not used.
 
