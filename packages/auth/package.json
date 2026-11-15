@@ -1,0 +1,50 @@
+{
+  "name": "@monashcoding/auth",
+  "version": "0.1.0",
+  "description": "MAC login for apps: verify mac-auth tokens, resolve the signed-in user, guard by role.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": { "type": "git", "url": "git+https://github.com/monashcoding/mac-core.git", "directory": "packages/auth" },
+  "publishConfig": { "access": "public" },
+  "files": ["dist"],
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "default": "./dist/index.js" },
+    "./next": { "types": "./dist/next.d.ts", "default": "./dist/next.js" },
+    "./express": { "types": "./dist/express.d.ts", "default": "./dist/express.js" },
+    "./client": { "types": "./dist/client.d.ts", "default": "./dist/client.js" },
+    "./react": { "types": "./dist/react.d.ts", "default": "./dist/react.js" },
+    "./testing": { "types": "./dist/testing.d.ts", "default": "./dist/testing.js" }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "jose": "^6.2.17",
+    "zod": "^4.6.7"
+  },
+  "peerDependencies": {
+    "express": ">=4",
+    "next": ">=15",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "express": { "optional": true },
+    "next": { "optional": true },
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@monashcoding/tsconfig": "workspace:*",
+    "@types/express": "^5.0.6",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "express": "^5.3.0",
+    "next": "^16.4.6",
+    "react": "^19.3.1",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
