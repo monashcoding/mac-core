@@ -1,31 +1,53 @@
 # @monashcoding/tsconfig
 
+TypeScript presets. One for Next.js apps, one for Node services, one for libraries.
+
+## Table of contents
+
+* [Getting started](#getting-started)
+* [Next.js app](#nextjs-app)
+* [Node service](#node-service)
+* [Library](#library)
+
+## Getting started
+
 ```bash
 pnpm add -D @monashcoding/tsconfig typescript
 ```
 
+## Next.js app
+
 ```jsonc
-// Next.js app
+// tsconfig.json
 {
   "extends": "@monashcoding/tsconfig/nextjs.json",
-  "compilerOptions": { "paths": { "@/*": ["./*"] } },
+  "compilerOptions": {
+    "paths": { "@/*": ["./*"] }
+  },
   "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"]
 }
 ```
 
-```jsonc
-// Node service (Express, scripts, bots)
-{ "extends": "@monashcoding/tsconfig/node.json", "include": ["src"] }
-```
+## Node service
+
+For Express servers, scripts and bots.
 
 ```jsonc
-// Library built with a bundler
-{ "extends": "@monashcoding/tsconfig/library.json", "include": ["src"] }
+// tsconfig.json
+{
+  "extends": "@monashcoding/tsconfig/node.json",
+  "include": ["src"]
+}
 ```
 
-| Preset | Adds to `base.json` |
-|---|---|
-| `base.json` | `strict`, `noUncheckedIndexedAccess`, `verbatimModuleSyntax`, bundler resolution |
-| `nextjs.json` | DOM libs, `jsx: preserve`, the Next plugin |
-| `node.json` | NodeNext modules, Node types |
-| `library.json` | declarations |
+## Library
+
+For a package built with a bundler.
+
+```jsonc
+// tsconfig.json
+{
+  "extends": "@monashcoding/tsconfig/library.json",
+  "include": ["src"]
+}
+```

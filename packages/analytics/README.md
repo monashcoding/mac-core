@@ -1,22 +1,47 @@
 # @monashcoding/analytics
 
-PostHog and Google Analytics for MAC apps.
+PostHog and Google Analytics for MAC apps. One setup per app, with replay masking and the PostHog proxy included.
+
+## Table of contents
+
+* [Getting started](#getting-started)
+* [Creating the analytics object](#creating-the-analytics-object)
+* [Starting it in the root layout](#starting-it-in-the-root-layout)
+* [Capturing events](#capturing-events)
+* [Adding the PostHog proxy](#adding-the-posthog-proxy)
+* [Capturing events on the server](#capturing-events-on-the-server)
+
+## Getting started
 
 ```bash
 pnpm add @monashcoding/analytics posthog-js posthog-node
 ```
 
-## Browser
+```bash
+NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN=phc_...
+NEXT_PUBLIC_GA_ID=G-...
+```
+
+## Creating the analytics object
+
+Create one per app and import it wherever you capture events.
 
 ```ts
 // lib/analytics.ts
 import { createAnalytics } from "@monashcoding/analytics/client";
 
 export const analytics = createAnalytics({
+  // Leave either out to turn that service off
   posthogToken: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
   gaId: process.env.NEXT_PUBLIC_GA_ID,
+  // Nothing is sent outside production builds. Set this to test locally.
+  // enabled: true,
 });
 ```
+
+## Starting it in the root layout
+
+`<MacAnalytics />` starts PostHog and Google Analytics, and ties events to the signed-in user.
 
 ```tsx
 // components/analytics.tsx
@@ -29,17 +54,37 @@ import { analytics } from "@/lib/analytics";
 
 export function Analytics() {
   const session = useMacSession();
+
+  // undefined while the session loads, null when signed out
   const userId = session.status === "loading" ? undefined : (session.user?.macUserId ?? null);
 
   return <MacAnalytics analytics={analytics} userId={userId} />;
 }
 ```
 
+```tsx
+// app/layout.tsx
+<body>
+  {children}
+  <Analytics />
+</body>
+```
+
+## Capturing events
+
 ```ts
+import { analytics } from "@/lib/analytics";
+
+analytics.capture("unit_added");
+
+// Properties are strings, numbers, booleans or null.
+// Never pass an email, a name or anything the user typed.
 analytics.capture("unit_added", { year: 2, semester: 1 });
 ```
 
-## PostHog proxy
+## Adding the PostHog proxy
+
+PostHog is called through `/ingest` on your own domain, so ad blockers do not drop events.
 
 ```ts
 // app/ingest/[...path]/route.ts
@@ -55,28 +100,21 @@ export const OPTIONS = handler;
 
 ```js
 // next.config.mjs
-export default { skipTrailingSlashRedirect: true };
+export default {
+  // PostHog calls /ingest/e/ with a trailing slash
+  skipTrailingSlashRedirect: true,
+};
 ```
 
-The proxy forwards an allowlist of headers. The `.monashcoding.com` session cookie never reaches PostHog.
-
-## Server
+## Capturing events on the server
 
 ```ts
 import { createServerAnalytics } from "@monashcoding/analytics/server";
 
 const analytics = createServerAnalytics({
   posthogToken: process.env.NEXT_PUBLIC_POSTHOG_PROJECT_TOKEN,
-  host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
 });
 
+// The first argument is the user's macUserId
 await analytics.capture(claims.macUserId, "plan_saved", { units: 24 });
 ```
-
-## Rules
-
-- Nothing is sent outside production builds. Pass `enabled: true` to override.
-- Events are identified by `macUserId`. Properties are strings, numbers, booleans or null; never an email, a name or user-typed text.
-- Session replay masks all text, inputs and text-bearing attributes, and never records request bodies or headers.
-- Google Analytics records page views only.
-- `posthog-js` and `posthog-node` are imported by this package alone. The `@monashcoding/lint` preset makes a direct import an error.

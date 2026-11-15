@@ -1,28 +1,36 @@
 # @monashcoding/auth
 
-Sign-in for MAC apps through [mac-auth](https://github.com/monashcoding/mac-auth). The app stores no passwords and no sessions; it verifies a 15-minute EdDSA token locally and keys its data by `macUserId`.
+Sign-in for MAC apps through mac-auth. Gives an app the signed-in user and role checks in Next.js, Express and the browser.
+
+## Table of contents
+
+* [Getting started](#getting-started)
+* [Getting the signed-in user in Next.js](#getting-the-signed-in-user-in-nextjs)
+* [Requiring a role](#requiring-a-role)
+* [Protecting a route handler](#protecting-a-route-handler)
+* [Express](#express)
+* [Signing in and out from the browser](#signing-in-and-out-from-the-browser)
+* [The session in a React component](#the-session-in-a-react-component)
+* [Verifying a token yourself](#verifying-a-token-yourself)
+* [Testing](#testing)
+
+## Getting started
 
 ```bash
 pnpm add @monashcoding/auth
 ```
 
-## Claims
-
-```ts
-interface MacClaims {
-  macUserId: string;       // stable id, the foreign key for app data
-  email: string;
-  name: string;
-  roles: string[];         // "member" | "committee" | "exec" | "admin"
-  team: string | null;
-  ver: number;
-}
+```bash
+# Both are optional. These are the defaults.
+AUTH_URL=https://auth.monashcoding.com
+JWT_AUDIENCE=mac-suite
 ```
 
-## Next.js
+## Getting the signed-in user in Next.js
 
-```ts
-// app/dashboard/page.tsx
+Call `getClaims()` in a server component or a server action. It returns `null` for a visitor who is not signed in.
+
+```tsx
 import { getClaims } from "@monashcoding/auth/next";
 
 export default async function Dashboard() {
@@ -30,59 +38,89 @@ export default async function Dashboard() {
 
   if (!claims) return <SignIn />;
 
+  //
+  // claims.macUserId  stable id, use it as the foreign key for the user's data
+  // claims.email
+  // claims.name
+  // claims.roles      "member", "committee", "exec", "admin"
+  // claims.team       "Events", or null when not on the committee
+  //
   return <p>Hi {claims.name}</p>;
 }
 ```
 
+## Requiring a role
+
+`requireClaims()` throws a `MacAuthError` when nobody is signed in, or when the user holds none of the roles.
+
 ```ts
-// app/actions.ts
 "use server";
 
 import { requireClaims } from "@monashcoding/auth/next";
 
 export async function publishEvent(id: string) {
+  // Any signed-in user: requireClaims()
+  // Committee or exec only:
   const claims = await requireClaims("committee", "exec");
 
   await db.update(event).set({ publishedBy: claims.macUserId }).where(eq(event.id, id));
 }
 ```
 
+## Protecting a route handler
+
+`withMacAuth()` answers 401 or 403 as JSON before your handler runs.
+
 ```ts
 // app/api/notes/route.ts
 import { withMacAuth } from "@monashcoding/auth/next";
 
-export const GET = withMacAuth(async (_request, claims) => {
+export const GET = withMacAuth(async (request, claims) => {
   return Response.json(await notesFor(claims.macUserId));
 });
 
-export const DELETE = withMacAuth(deleteAll, { roles: ["admin"] });
+// Pass roles to limit who gets through
+export const DELETE = withMacAuth(deleteAllNotes, { roles: ["admin"] });
 ```
 
 ## Express
 
+Mount `attachMacUser()` once, then guard routes with `requireAuth()`.
+
 ```ts
 import { attachMacUser, getMacUser, requireAuth } from "@monashcoding/auth/express";
 
+// Resolves the user for every request. Never rejects.
 app.use(attachMacUser());
 
+// 401 when nobody is signed in
 app.get("/api/me", requireAuth(), (req, res) => {
   res.json(getMacUser(req));
 });
 
+// 403 unless the user is committee or exec
 app.post("/api/admin/import", requireAuth("committee", "exec"), importHandler);
 ```
 
-## Browser
+## Signing in and out from the browser
 
 ```ts
 import { getMacAuthClient } from "@monashcoding/auth/client";
 
 const auth = getMacAuthClient();
 
-await auth.signIn("google");                    // or "microsoft"
-const response = await auth.fetch("/api/me");   // Bearer token attached, renewed on 401
+// Redirects to Google or Microsoft, then back to this page
+await auth.signIn("google");
+await auth.signIn("microsoft", "https://jobs.monashcoding.com/saved");
+
+// fetch with the user's token attached. Renews the token on a 401.
+const response = await auth.fetch("/api/me");
+
+// Ends the session in every MAC app
 await auth.signOut();
 ```
+
+## The session in a React component
 
 ```tsx
 "use client";
@@ -99,22 +137,29 @@ export function AccountMenu() {
 }
 ```
 
-## Anything else
+## Verifying a token yourself
+
+For a backend that is neither Next.js nor Express.
 
 ```ts
-import { createMacAuth, hasRole, requireRole } from "@monashcoding/auth";
+import { createMacAuth, hasRole, MacAuthError } from "@monashcoding/auth";
 
 const auth = createMacAuth();
 
-const claims = await auth.claimsFromHeaders(request.headers);   // bearer, then cookie
-const sameClaims = await auth.verifyToken(token);               // throws MacAuthError
+// From a Request: reads the Bearer token first, then the session cookie
+const claims = await auth.claimsFromHeaders(request.headers);
 
-if (hasRole(claims, "committee")) { /* ... */ }
+// From a token you already hold. Throws MacAuthError when it is not valid.
+const verified = await auth.verifyToken(token);
+
+if (hasRole(claims, "committee")) {
+  // ...
+}
 ```
 
-`MacAuthError` carries `status` (401 or 403) and `code` (`unauthenticated`, `invalid_token`, `forbidden`).
+## Testing
 
-## Tests
+`createTestIssuer()` signs tokens your tests can verify, with no network.
 
 ```ts
 import { createMacAuth } from "@monashcoding/auth";
@@ -122,14 +167,7 @@ import { createTestIssuer, TEST_AUTH_URL } from "@monashcoding/auth/testing";
 
 const issuer = await createTestIssuer();
 const auth = createMacAuth({ authUrl: TEST_AUTH_URL, keys: issuer.keys });
-const token = await issuer.sign({ claims: { roles: ["member", "exec"] } });
+
+const token = await issuer.sign({ claims: { macUserId: "user_2", roles: ["member", "exec"] } });
+const claims = await auth.verifyToken(token);
 ```
-
-## Environment
-
-| Variable | Default |
-|---|---|
-| `AUTH_URL` | `https://auth.monashcoding.com` |
-| `JWT_AUDIENCE` | `mac-suite` |
-
-The shared session cookie is set on `.monashcoding.com`, so cookie sign-in works on `*.monashcoding.com` hosts. On localhost, add the dev origin to mac-auth's `TRUSTED_ORIGINS`.

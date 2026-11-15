@@ -2,42 +2,29 @@
 
 Shared TypeScript packages for Monash Association of Coding apps.
 
-| Package | Use |
-|---|---|
-| [`@monashcoding/auth`](packages/auth) | Sign-in through mac-auth, the signed-in user, role guards |
-| [`@monashcoding/analytics`](packages/analytics) | PostHog and Google Analytics |
-| [`@monashcoding/db`](packages/db) | Postgres through Drizzle, encrypted columns, per-app databases |
-| [`@monashcoding/lint`](packages/lint) | Oxlint preset with the anti-slop rules |
-| [`@monashcoding/tsconfig`](packages/tsconfig) | TypeScript presets |
+## Components
 
-```bash
-pnpm add @monashcoding/auth @monashcoding/analytics @monashcoding/db
-pnpm add -D @monashcoding/lint @monashcoding/tsconfig oxlint
-```
+### [@monashcoding/auth](packages/auth)
 
-[`docs/ADOPTING.md`](docs/ADOPTING.md) lists what each MAC app replaces.
+Sign-in for MAC apps through mac-auth.
+Gives an app the signed-in user and role checks in Next.js, Express and the browser.
 
-## Development
+### [@monashcoding/analytics](packages/analytics)
 
-```bash
-pnpm install
-pnpm check
-```
+PostHog and Google Analytics for MAC apps.
+One setup per app, with replay masking and the PostHog proxy included.
 
-`pnpm check` builds every package, lints, typechecks and runs the tests.
+### [@monashcoding/db](packages/db)
 
-## Releasing
+Postgres for MAC apps through Drizzle.
+Connects to the shared server, encrypts sensitive columns and creates a database per app.
 
-```bash
-pnpm changeset
-```
+### [@monashcoding/lint](packages/lint)
 
-Commit the generated file with the change. On `main`, the Release workflow opens a "Version Packages" pull request; merging it publishes the changed packages to npm. The workflow needs an `NPM_TOKEN` repository secret with publish access to the `@monashcoding` scope.
+The MAC Oxlint preset.
+Turns on every anti-slop rule in three lines of config.
 
-## Trying a change in an app before release
+### [@monashcoding/tsconfig](packages/tsconfig)
 
-```bash
-pnpm build
-cd packages/auth && pnpm pack
-cd ~/your-app && pnpm add ~/mac-core/packages/auth/monashcoding-auth-0.1.0.tgz
-```
+TypeScript presets.
+One for Next.js apps, one for Node services, one for libraries.
