@@ -1,0 +1,33 @@
+{
+  "name": "@monashcoding/lint",
+  "version": "0.1.0",
+  "description": "MAC Oxlint preset with the vendored anti-slop rules.",
+  "license": "MIT",
+  "type": "module",
+  "repository": { "type": "git", "url": "git+https://github.com/monashcoding/mac-core.git", "directory": "packages/lint" },
+  "publishConfig": { "access": "public" },
+  "files": ["dist", "src/anti-slop/LICENSE", "src/anti-slop/UPSTREAM.md", "src/anti-slop/vendor/eslint-stylistic/LICENSE", "src/anti-slop/vendor/eslint-stylistic/UPSTREAM.md"],
+  "exports": {
+    ".": { "types": "./dist/index.d.mts", "default": "./dist/index.mjs" },
+    "./anti-slop": { "types": "./dist/anti-slop.d.mts", "default": "./dist/anti-slop.mjs" },
+    "./anti-slop-effect": { "types": "./dist/anti-slop-effect.d.mts", "default": "./dist/anti-slop-effect.mjs" }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "node scripts/run-rule-tests.mjs"
+  },
+  "dependencies": {
+    "@oxlint/plugins": "1.93.0"
+  },
+  "peerDependencies": {
+    "oxlint": "1.93.0"
+  },
+  "devDependencies": {
+    "@types/node": "^24.0.0",
+    "oxlint": "1.93.0",
+    "tsdown": "^0.23.7",
+    "tsx": "^4.23.12",
+    "typescript": "^7.0.2"
+  }
+}
