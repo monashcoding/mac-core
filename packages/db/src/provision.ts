@@ -43,7 +43,11 @@ export function provisionStatements(options: ProvisionOptions): string[] {
 
   return [
     `CREATE ROLE "${app}" LOGIN NOSUPERUSER NOCREATEDB NOCREATEROLE NOREPLICATION CONNECTION LIMIT ${limit} PASSWORD ${quoteLiteral(password)}`,
+    // A managed server's administrator is not a superuser, and may only hand
+    // a database to a role it is a member of. It joins for that one statement.
+    `GRANT "${app}" TO CURRENT_USER`,
     `CREATE DATABASE "${app}" OWNER "${app}"`,
+    `REVOKE "${app}" FROM CURRENT_USER`,
     `REVOKE ALL ON DATABASE "${app}" FROM PUBLIC`,
     `GRANT CONNECT, TEMPORARY ON DATABASE "${app}" TO "${app}"`,
   ];
