@@ -1,0 +1,43 @@
+{
+  "name": "@monashcoding/analytics",
+  "version": "0.1.0",
+  "description": "PostHog and Google Analytics for MAC apps, with the shared privacy rules built in.",
+  "license": "MIT",
+  "type": "module",
+  "sideEffects": false,
+  "repository": { "type": "git", "url": "git+https://github.com/monashcoding/mac-core.git", "directory": "packages/analytics" },
+  "publishConfig": { "access": "public" },
+  "files": ["dist"],
+  "exports": {
+    "./client": { "types": "./dist/client.d.ts", "default": "./dist/client.js" },
+    "./react": { "types": "./dist/react.d.ts", "default": "./dist/react.js" },
+    "./server": { "types": "./dist/server.d.ts", "default": "./dist/server.js" },
+    "./ingest": { "types": "./dist/ingest.d.ts", "default": "./dist/ingest.js" }
+  },
+  "scripts": {
+    "build": "tsdown",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "peerDependencies": {
+    "posthog-js": ">=1.200.0",
+    "posthog-node": ">=5",
+    "react": ">=18"
+  },
+  "peerDependenciesMeta": {
+    "posthog-js": { "optional": true },
+    "posthog-node": { "optional": true },
+    "react": { "optional": true }
+  },
+  "devDependencies": {
+    "@monashcoding/tsconfig": "workspace:*",
+    "@types/node": "^24.0.0",
+    "@types/react": "^19.0.0",
+    "posthog-js": "^1.400.0",
+    "posthog-node": "^5.60.0",
+    "react": "^19.3.1",
+    "tsdown": "^0.23.7",
+    "typescript": "^7.0.2",
+    "vitest": "^5.1.0"
+  }
+}
