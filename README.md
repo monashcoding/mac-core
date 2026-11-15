@@ -39,6 +39,11 @@ Turns on every anti-slop rule in three lines of config.
 TypeScript presets.
 One for Next.js apps, one for Node services, one for libraries.
 
+### [Style guide](style-guide)
+
+One visual language for MAC apps.
+Colour, type, components, a ready-to-paste Tailwind theme and the Min and Max mascots.
+
 ## Conventions
 
 [CONVENTIONS.md](CONVENTIONS.md) is how every MAC app is built on these packages.
