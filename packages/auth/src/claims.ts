@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-/** Roles mac-auth issues. `member` is anyone signed in. */
+/** Roles mac-auth issues. `member` is anyone signed in; club membership is `clubMember`. */
 export const MAC_ROLES = ["member", "committee", "exec", "admin"] as const;
 
 export type MacRole = (typeof MAC_ROLES)[number];
@@ -21,6 +21,8 @@ export const macClaimsSchema = z.object({
     .string()
     .nullish()
     .transform((team) => team ?? null),
+  /** A current member on the MSA member roster. Not the `member` role. */
+  clubMember: z.boolean().default(false),
   ver: z.number().default(1),
 });
 

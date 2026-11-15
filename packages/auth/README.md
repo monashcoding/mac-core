@@ -7,9 +7,11 @@ Sign-in for MAC apps through mac-auth. Gives an app the signed-in user and role 
 * [Getting started](#getting-started)
 * [Getting the signed-in user in Next.js](#getting-the-signed-in-user-in-nextjs)
 * [Requiring a role](#requiring-a-role)
+* [Requiring a club member](#requiring-a-club-member)
 * [Protecting a route handler](#protecting-a-route-handler)
 * [Express](#express)
 * [Signing in and out from the browser](#signing-in-and-out-from-the-browser)
+* [Linking a membership from the browser](#linking-a-membership-from-the-browser)
 * [The session in a React component](#the-session-in-a-react-component)
 * [Verifying a token yourself](#verifying-a-token-yourself)
 * [Testing](#testing)
@@ -67,6 +69,37 @@ export async function publishEvent(id: string) {
 }
 ```
 
+## Requiring a club member
+
+`clubMember` is true for a current member on the MSA roster. The `member` role is everyone who is signed in.
+
+```ts
+import { isClubMember } from "@monashcoding/auth";
+import { getClaims, requireClubMember, withMacAuth } from "@monashcoding/auth/next";
+
+// A server component
+const claims = await getClaims();
+
+if (isClubMember(claims)) {
+  // ...
+}
+
+// A server action: throws a 401 or 403 MacAuthError
+const member = await requireClubMember();
+
+// A route handler
+export const GET = withMacAuth(async (request, claims) => Response.json(await perksFor(claims.macUserId)), {
+  clubMember: true,
+});
+```
+
+```ts
+// Express, after attachMacUser()
+import { requireClubMember } from "@monashcoding/auth/express";
+
+app.get("/api/perks", requireClubMember(), listPerks);
+```
+
 ## Protecting a route handler
 
 `withMacAuth()` answers 401 or 403 as JSON before your handler runs.
@@ -118,6 +151,32 @@ const response = await auth.fetch("/api/me");
 
 // Ends the session in every MAC app
 await auth.signOut();
+```
+
+## Linking a membership from the browser
+
+A member who signed in with an email the roster does not know links their account once, with their student ID.
+
+```ts
+import { getMacAuthClient } from "@monashcoding/auth/client";
+
+const auth = getMacAuthClient();
+
+// null when signed out
+const membership = await auth.getMembership();
+
+if (membership && !membership.clubMember && membership.canEnterStudentId) {
+  const result = await auth.linkStudentId(studentId);
+
+  if (result.ok) {
+    // The session has reloaded: useMacSession().user.clubMember is current
+  } else {
+    showError(result.message, result.attemptsRemaining);
+  }
+}
+
+// Out of attempts for the next hour
+if (membership?.contactUs) showContactCommittee();
 ```
 
 ## The session in a React component

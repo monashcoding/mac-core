@@ -12,6 +12,35 @@ const tokenResponseSchema = z.object({ token: z.string().min(1) });
 const signInResponseSchema = z.object({ url: z.string().min(1) });
 const expirySchema = z.object({ exp: z.number() });
 
+const membershipSchema = z.object({
+  clubMember: z.boolean(),
+  link: z.object({
+    linked: z.boolean(),
+    canEnterStudentId: z.boolean(),
+    contactUs: z.boolean(),
+    attemptsRemaining: z.number().optional(),
+  }),
+});
+
+const noMatchSchema = z.object({ message: z.string(), attemptsRemaining: z.number() });
+
+/** A signed-in person's club membership, as mac-auth sees it right now. */
+export interface Membership {
+  /** A current member on the MSA roster. */
+  readonly clubMember: boolean;
+  /** The account is tied to a roster member. Final once true. */
+  readonly linked: boolean;
+  /** Show the student ID field. */
+  readonly canEnterStudentId: boolean;
+  /** Out of attempts for now: point the person at the committee. */
+  readonly contactUs: boolean;
+  readonly attemptsRemaining: number | null;
+}
+
+export type LinkStudentIdResult =
+  | { readonly ok: true; readonly membership: Membership }
+  | { readonly ok: false; readonly message: string; readonly attemptsRemaining: number };
+
 export type MacProvider = "google" | "microsoft";
 
 export type MacSession =
@@ -34,6 +63,13 @@ export interface MacAuthClient {
   getToken(): Promise<string | null>;
   /** `fetch` with the token attached. Retries once with a fresh token on 401. */
   fetch(input: RequestInfo | URL, init?: RequestInit): Promise<Response>;
+  /** The signed-in person's club membership, or null when signed out. */
+  getMembership(): Promise<Membership | null>;
+  /**
+   * Link this account to a roster member by student ID. On success the
+   * session reloads, so `clubMember` in the claims is current.
+   */
+  linkStudentId(studentId: string): Promise<LinkStudentIdResult>;
   /** Load the session. `useMacSession` calls this on mount. */
   refresh(): Promise<MacSession>;
   getSession(): MacSession;
@@ -53,6 +89,16 @@ const SIGNED_OUT: MacSession = { status: "signed-out", user: null };
  * Read a token's claims for display. The browser never verifies the
  * signature; the app's backend does, on every request.
  */
+function toMembership(body: z.infer<typeof membershipSchema>): Membership {
+  return {
+    clubMember: body.clubMember,
+    linked: body.link.linked,
+    canEnterStudentId: body.link.canEnterStudentId,
+    contactUs: body.link.contactUs,
+    attemptsRemaining: body.link.attemptsRemaining ?? null,
+  };
+}
+
 function readToken(token: string): CachedToken | null {
   const payload = decodeJwt(token);
   const claims = macClaimsSchema.safeParse(payload);
@@ -156,6 +202,34 @@ export function createMacAuthClient(options: MacAuthClientOptions = {}): MacAuth
       const renewed = await load();
 
       return renewed ? send(input, init, renewed.token) : response;
+    },
+
+    async getMembership() {
+      const response = await request(`${authUrl}/api/membership/me`, { credentials: "include" });
+
+      if (!response.ok) return null;
+
+      return toMembership(membershipSchema.parse(await response.json()));
+    },
+
+    async linkStudentId(studentId) {
+      const response = await request(`${authUrl}/api/membership/me/student-id`, {
+        method: "POST",
+        credentials: "include",
+        headers: { "content-type": "application/json" },
+        body: JSON.stringify({ studentId }),
+      });
+
+      if (response.status === 422) return { ok: false, ...noMatchSchema.parse(await response.json()) };
+
+      if (!response.ok) throw new Error(`mac-auth answered ${response.status} to a student ID.`);
+
+      const membership = toMembership(membershipSchema.parse(await response.json()));
+
+      // The claim changes at the next mint, so mint now.
+      if (membership.linked) await load();
+
+      return { ok: true, membership };
     },
 
     async refresh() {

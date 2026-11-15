@@ -2,7 +2,7 @@ import { describe, expect, it } from "vitest";
 
 import type { MacClaims } from "./claims";
 import { bearerToken, sessionCookieHeader } from "./cookies";
-import { hasAnyRole, hasRole, requireRole, requireUser } from "./roles";
+import { hasAnyRole, hasRole, isClubMember, requireClubMember, requireRole, requireUser } from "./roles";
 
 const member: MacClaims = {
   macUserId: "user_1",
@@ -10,10 +10,25 @@ const member: MacClaims = {
   name: "Ada",
   roles: ["member"],
   team: null,
+  clubMember: false,
   ver: 1,
 };
 
 const exec: MacClaims = { ...member, roles: ["member", "committee", "exec"] };
+
+describe("club membership", () => {
+  it("is the clubMember claim, not the member role", () => {
+    expect(isClubMember(member)).toBe(false);
+    expect(isClubMember({ ...member, clubMember: true })).toBe(true);
+    expect(isClubMember(null)).toBe(false);
+  });
+
+  it("answers 401 for anonymous and 403 for a non-member", () => {
+    expect(() => requireClubMember(null)).toThrowError(expect.objectContaining({ status: 401 }));
+    expect(() => requireClubMember(member)).toThrowError(expect.objectContaining({ status: 403 }));
+    expect(requireClubMember({ ...member, clubMember: true }).macUserId).toBe("user_1");
+  });
+});
 
 describe("roles", () => {
   it("checks roles", () => {

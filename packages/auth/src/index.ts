@@ -4,7 +4,7 @@ export { bearerToken, sessionCookieHeader } from "./cookies";
 
 export { MacAuthError, type MacAuthErrorCode } from "./errors";
 
-export { hasAnyRole, hasRole, requireRole, requireUser } from "./roles";
+export { hasAnyRole, hasRole, isClubMember, requireClubMember, requireRole, requireUser } from "./roles";
 
 export {
   createMacAuth,

@@ -3,7 +3,7 @@ import { cache } from "react";
 
 import type { MacClaims } from "./claims";
 import { MacAuthError } from "./errors";
-import { requireRole, requireUser } from "./roles";
+import { requireClubMember as requireMemberClaims, requireRole, requireUser } from "./roles";
 import { getMacAuth } from "./server";
 
 /**
@@ -21,9 +21,16 @@ export async function requireClaims(...roles: string[]): Promise<MacClaims> {
   return roles.length > 0 ? requireRole(claims, ...roles) : requireUser(claims);
 }
 
+/** The claims of a signed-in current club member, or a MacAuthError. */
+export async function requireClubMember(): Promise<MacClaims> {
+  return requireMemberClaims(await getClaims());
+}
+
 export interface RouteGuard {
   /** Require one of these roles. Any signed-in user passes when omitted. */
   readonly roles?: readonly string[];
+  /** Require a current club member. */
+  readonly clubMember?: boolean;
 }
 
 type AuthedRouteHandler<Context> = (
@@ -45,6 +52,8 @@ export function withMacAuth<Context = never>(
 
     try {
       const user = guard.roles ? requireRole(claims, ...guard.roles) : requireUser(claims);
+
+      if (guard.clubMember) requireMemberClaims(user);
 
       return await handler(request, user, context);
     } catch (error) {

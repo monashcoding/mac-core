@@ -14,6 +14,13 @@ beforeAll(async () => {
 });
 
 describe("verifyToken", () => {
+  it("reads clubMember, and treats a token without it as not a member", async () => {
+    const member = await auth.verifyToken(await issuer.sign({ claims: { clubMember: true } }));
+
+    expect(member.clubMember).toBe(true);
+    expect((await auth.verifyToken(await issuer.sign())).clubMember).toBe(false);
+  });
+
   it("returns the claims of a valid token", async () => {
     const claims = await auth.verifyToken(await issuer.sign());
 
@@ -23,6 +30,7 @@ describe("verifyToken", () => {
       name: "Ada Lovelace",
       roles: ["member", "committee"],
       team: "Projects",
+      clubMember: false,
       ver: 1,
     });
   });

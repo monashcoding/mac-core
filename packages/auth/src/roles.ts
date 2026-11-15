@@ -27,3 +27,17 @@ export function requireRole(claims: MacClaims | null, ...roles: string[]): MacCl
 
   return user;
 }
+
+/** True when the user is a current club member on the MSA roster. */
+export function isClubMember(claims: MacClaims | null): boolean {
+  return claims?.clubMember ?? false;
+}
+
+/** The claims of a current club member, or a 401 or 403 MacAuthError. */
+export function requireClubMember(claims: MacClaims | null): MacClaims {
+  const user = requireUser(claims);
+
+  if (!user.clubMember) throw new MacAuthError("forbidden", "Requires a current MAC membership.");
+
+  return user;
+}

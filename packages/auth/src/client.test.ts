@@ -77,4 +77,66 @@ describe("createMacAuthClient", () => {
     expect(response.status).toBe(200);
     expect(calls).toEqual([`Bearer ${token}`, `Bearer ${token}`]);
   });
+
+  it("reads membership, and is null when signed out", async () => {
+    const body = { clubMember: false, link: { linked: false, canEnterStudentId: true, contactUs: false, attemptsRemaining: 20 } };
+    const urls: string[] = [];
+
+    const client = createMacAuthClient({
+      authUrl: "https://auth.test",
+      fetch: async (input) => {
+        urls.push(String(input));
+
+        return Response.json(body);
+      },
+    });
+
+    expect(await client.getMembership()).toEqual({
+      clubMember: false,
+      linked: false,
+      canEnterStudentId: true,
+      contactUs: false,
+      attemptsRemaining: 20,
+    });
+    expect(urls).toEqual(["https://auth.test/api/membership/me"]);
+
+    const signedOut = createMacAuthClient({ fetch: async () => new Response(null, { status: 401 }) });
+
+    expect(await signedOut.getMembership()).toBeNull();
+  });
+
+  it("links by student ID and reloads the session so the claim is current", async () => {
+    const token = await issuer.sign({ claims: { clubMember: true } });
+    const calls: string[] = [];
+
+    const client = createMacAuthClient({
+      authUrl: "https://auth.test",
+      fetch: async (input, init) => {
+        const path = new URL(String(input)).pathname;
+
+        calls.push(`${init?.method ?? "GET"} ${path}`);
+
+        if (path === "/api/auth/token") return Response.json({ token });
+
+        return Response.json({ clubMember: true, link: { linked: true, canEnterStudentId: false, contactUs: false } });
+      },
+    });
+
+    const result = await client.linkStudentId("31234567");
+
+    expect(result).toEqual({
+      ok: true,
+      membership: { clubMember: true, linked: true, canEnterStudentId: false, contactUs: false, attemptsRemaining: null },
+    });
+    expect(calls).toEqual(["POST /api/membership/me/student-id", "GET /api/auth/token"]);
+    expect(client.getSession().user?.clubMember).toBe(true);
+  });
+
+  it("reports a student ID that did not match", async () => {
+    const client = createMacAuthClient({
+      fetch: async () => Response.json({ error: "no_match", message: "No match.", attemptsRemaining: 19 }, { status: 422 }),
+    });
+
+    expect(await client.linkStudentId("1")).toEqual({ ok: false, message: "No match.", attemptsRemaining: 19 });
+  });
 });

@@ -3,7 +3,7 @@ import { createLocalJWKSet, exportJWK, generateKeyPair, type JWTVerifyGetKey, Si
 export const TEST_AUTH_URL = "https://auth.test";
 
 export interface TokenOverrides {
-  readonly claims?: Readonly<Record<string, string | number | string[] | null>>;
+  readonly claims?: Readonly<Record<string, string | number | boolean | string[] | null>>;
   readonly issuer?: string;
   readonly audience?: string;
   readonly expiresIn?: string;
