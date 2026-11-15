@@ -5,6 +5,7 @@ export interface FeatureSubject {
   readonly macUserId: string;
   readonly roles: readonly string[];
   readonly team?: string | null;
+  readonly clubMember?: boolean;
 }
 
 /** What a flag source is asked: every flag key of the registry, for one person. */
@@ -157,6 +158,9 @@ export function defineFeatures<Name extends string>(options: FeaturesOptions<Nam
     // A role gate is a hard limit: no flag can hand the feature to someone outside it.
     if (roles && !roles.some((role) => subject?.roles.includes(role))) return false;
 
+    // So is club membership.
+    if (definition.clubMembersOnly && !subject?.clubMember) return false;
+
     return flags[keys.get(name) ?? ""] ?? definition.fallback;
   }
 
@@ -173,6 +177,7 @@ export function defineFeatures<Name extends string>(options: FeaturesOptions<Nam
           signedIn: subject !== null,
           roles: subject?.roles.join(",") ?? "",
           team: subject?.team ?? "",
+          clubMember: subject?.clubMember ?? false,
         },
       })
       .catch(() => ({}));

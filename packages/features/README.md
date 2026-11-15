@@ -28,7 +28,7 @@ POSTHOG_SECRET_KEY=phs_...
 
 ## Declaring features
 
-Every gated feature lives in one registry. There are three kinds.
+Every gated feature lives in one registry. There are four kinds.
 
 ```ts
 // lib/features.ts
@@ -61,6 +61,12 @@ export const features = defineFeatures({
       description: "Review moderation queue",
       owner: "swofty",
       roles: ["committee", "exec"],
+    }),
+
+    // On for current club members (`clubMember` in the token), off for everyone else.
+    perks: feature.members({
+      description: "Member discounts",
+      owner: "swofty",
     }),
   },
 });

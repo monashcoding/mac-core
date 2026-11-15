@@ -28,6 +28,18 @@ describe("defineFeatures", () => {
     expect((await registry().evaluate(null)).isEnabled("moderation")).toBe(false);
   });
 
+  it("gives members features to current club members only, whatever the flag says", async () => {
+    const perks = { perks: feature.members({ description: "Member discounts", owner: "swofty" }) };
+    const clubMember = { ...member, clubMember: true };
+    const on = defineFeatures({ app: "monmap", features: perks, flags: async () => ({ "monmap-perks": true }) });
+    const off = defineFeatures({ app: "monmap", features: perks, flags: async () => ({ "monmap-perks": false }) });
+
+    expect((await on.evaluate(clubMember)).isEnabled("perks")).toBe(true);
+    expect((await on.evaluate(member)).isEnabled("perks")).toBe(false);
+    expect((await on.evaluate(null)).isEnabled("perks")).toBe(false);
+    expect((await off.evaluate(clubMember)).isEnabled("perks")).toBe(false);
+  });
+
   it("lets a flag turn a release on and a kill switch off", async () => {
     const set = await registry(async () => ({ "monmap-ai-planner": true, "monmap-reviews": false })).evaluate(member);
 
@@ -56,7 +68,7 @@ describe("defineFeatures", () => {
       JSON.stringify({
         distinctId: "user_2",
         keys: ["monmap-ai-planner", "monmap-reviews", "monmap-moderation"],
-        properties: { signedIn: true, roles: "member,committee,exec", team: "Projects" },
+        properties: { signedIn: true, roles: "member,committee,exec", team: "Projects", clubMember: false },
       }),
     ]);
   });

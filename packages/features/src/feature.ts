@@ -18,18 +18,20 @@ export interface StaffOptions extends Described {
   readonly roles: readonly [string, ...string[]];
 }
 
-export type FeatureKind = "release" | "killSwitch" | "staff";
+export type FeatureKind = "release" | "killSwitch" | "staff" | "members";
 
 export interface FeatureDefinition extends Described {
   readonly kind: FeatureKind;
   /** The value when PostHog has no answer: no flag exists, or PostHog is unreachable. */
   readonly fallback: boolean;
   readonly roles: readonly string[] | null;
+  /** Only current club members can have the feature. */
+  readonly clubMembersOnly: boolean;
   readonly expires: IsoDate | null;
 }
 
 /**
- * The three kinds of feature. Every feature in a registry is one of them.
+ * The four kinds of feature. Every feature in a registry is one of them.
  */
 export const feature = {
   /**
@@ -37,7 +39,7 @@ export const feature = {
    * turns it on, and it carries the date the flag is removed by.
    */
   release(options: ReleaseOptions): FeatureDefinition {
-    return { ...options, kind: "release", fallback: false, roles: null };
+    return { ...options, kind: "release", fallback: false, roles: null, clubMembersOnly: false };
   },
 
   /**
@@ -45,7 +47,7 @@ export const feature = {
    * its PostHog flag turns it off. Never expires.
    */
   killSwitch(options: Described): FeatureDefinition {
-    return { ...options, kind: "killSwitch", fallback: true, roles: null, expires: null };
+    return { ...options, kind: "killSwitch", fallback: true, roles: null, clubMembersOnly: false, expires: null };
   },
 
   /**
@@ -54,6 +56,15 @@ export const feature = {
    * it off for the staff too.
    */
   staff(options: StaffOptions): FeatureDefinition {
-    return { ...options, kind: "staff", fallback: true, expires: null };
+    return { ...options, kind: "staff", fallback: true, clubMembersOnly: false, expires: null };
+  },
+
+  /**
+   * A perk for current club members (`clubMember` in the mac-auth
+   * token). On for them, off for everyone else, and its PostHog flag
+   * can turn it off for members too.
+   */
+  members(options: Described): FeatureDefinition {
+    return { ...options, kind: "members", fallback: true, roles: null, clubMembersOnly: true, expires: null };
   },
 };
